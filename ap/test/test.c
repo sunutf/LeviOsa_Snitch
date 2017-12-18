@@ -9,11 +9,7 @@
 
 #include "test.h"
 #include "test_def.h"
-#include "vcp/test_vcp.h"
-#include "led/test_led.h"
-#include "uart/test_uart.h"
-#include "button/test_button.h"
-#include "dxl/test_dxl.h"
+
 
 
 //-- Internal Variables
