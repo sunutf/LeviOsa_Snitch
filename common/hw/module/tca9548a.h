@@ -24,7 +24,6 @@
 
 #define TCAADDR 0x70
 
-bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch);
 bool tca9548aInit(void);
 err_code_t tcaI2CTransmit(uint8_t ch, uint8_t addr, uint8_t *p_data, uint32_t length, uint32_t timeout);
 

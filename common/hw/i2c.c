@@ -55,9 +55,9 @@ bool i2cInit(void)
   return true;
 }
 
-err_code_t i2cTransmitByte(uint8_t ch, uint16_t dev_addr, uint8_t *p_data)
+err_code_t i2cTransmitByte(uint8_t ch, uint16_t dev_addr, uint8_t data)
 {
-	return i2cTransmitBytes(ch, dev_addr, p_data, 1);
+	return i2cTransmitBytes(ch, dev_addr, &data, 1);
 }
 
 err_code_t i2cTransmitBytes(uint8_t ch, uint16_t dev_addr, uint8_t *p_data, uint32_t length)

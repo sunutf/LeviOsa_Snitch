@@ -32,7 +32,7 @@
 
 bool    i2cInit(void);
 
-err_code_t i2cTransmitByte (uint8_t ch, uint16_t dev_addr, uint8_t *p_data);
+err_code_t i2cTransmitByte(uint8_t ch, uint16_t dev_addr, uint8_t data);
 err_code_t i2cTransmitBytes(uint8_t ch, uint16_t dev_addr, uint8_t *p_data, uint32_t length);
 
 err_code_t i2cReadByte (uint8_t ch, uint16_t dev_addr, uint16_t reg_addr, uint8_t *p_data);

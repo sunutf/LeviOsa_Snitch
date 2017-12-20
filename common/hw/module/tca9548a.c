@@ -20,7 +20,7 @@ void tca9548aCmdifInit(void);
 int  tca9548aCmdif(int argc, char **argv);
 #endif
 
-static void writeReg(uint8_t i2c_ch, uint8_t ch, uint32_t id);
+static void writeReg(uint8_t i2c_ch, uint8_t id, uint8_t ch);
 
 bool tca9548aInit(void)
 {
@@ -29,7 +29,6 @@ bool tca9548aInit(void)
 #endif
   return true;
 }
-
 
 bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch)
 {
@@ -40,12 +39,9 @@ bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch)
 
 }
 
-
-
-
-void writeReg(uint8_t i2c_ch, uint8_t id,  uint32_t ch)
+void writeReg(uint8_t i2c_ch, uint8_t id,  uint8_t ch)
 {
-	i2cTransmitByte(i2c_ch, TCAADDR|id, (uint8_t *)&ch);
+	i2cTransmitByte(i2c_ch, TCAADDR|id, ch);
 }
 
 #ifdef _USE_HW_CMDIF_TCA9548A
@@ -74,6 +70,7 @@ int tca9548aCmdif(int argc, char **argv)
 		  return 0;
 	  }
 
+	  i2c_ch--;
 	  id--;
       ch--;
 
@@ -90,7 +87,7 @@ int tca9548aCmdif(int argc, char **argv)
       return -1;
     }
 
-    cmdifPrintf("Open Ch : %d, Id : %d Well \n", ch, id);
+    cmdifPrintf("Open ID : %d, Ch : %d Well \n", id, ch);
   }
   else
   {
