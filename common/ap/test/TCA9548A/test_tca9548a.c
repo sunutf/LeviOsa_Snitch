@@ -12,7 +12,7 @@
 #include "test_tca9548a.h"
 #include "tca9548a.h"
 
-#define NUM_CH   6
+#define NUM_CH   4
 
 
 void testMuxMain(void)
@@ -24,9 +24,12 @@ void testMuxMain(void)
     uint8_t    id     = 0;
     uint8_t    ch     = 0;
     uint16_t   lux_buf[NUM_CH];
+    uint32_t   t_micros;
+
 
 	while(cmdifRxAvailable() == 0)
 	{
+		t_micros = micros();
 		for(ch = 0; ch < NUM_CH ; ch++)
 		{
 			ret  = tcaSelect(i2c_ch, id, ch);
@@ -41,7 +44,9 @@ void testMuxMain(void)
 			tcs34725GetRGBC(&tcs34725);
 			lux_buf[ch] = tcs34725CalculateLux(&tcs34725);
 		}
+        t_micros = micros() - t_micros;
 
+        cmdifPrintf("Time : %d  ", t_micros);
 		cmdifPrintf("Result : ");
 
 		for(ch = 0; ch < NUM_CH; ch++)
