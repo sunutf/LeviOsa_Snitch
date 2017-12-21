@@ -8,6 +8,7 @@
 #include <stdarg.h>
 #include <stdbool.h>
 
+
 #include "tca9548a.h"
 
 #ifdef _USE_HW_TCA9548A
@@ -87,11 +88,16 @@ int tca9548aCmdif(int argc, char **argv)
       return -1;
     }
 
-    cmdifPrintf("Open ID : %d, Ch : %d Well \n", id, ch);
+    cmdifPrintf("Open ID : %d, Ch : %d \n", id, ch);
   }
   else
   {
     ret = false;
+  }
+
+  if(argc == 2 && strcmp("demo", argv[1]) == 0)
+  {
+	  testMuxMain();
   }
 
 

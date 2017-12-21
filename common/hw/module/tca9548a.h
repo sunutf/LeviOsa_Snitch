@@ -15,6 +15,7 @@
 #include "i2c.h"
 #include "math.h"
 #include "hw_def.h"
+#include "tcs34725.h"
 
 #ifdef _USE_HW_TCA9548A
 

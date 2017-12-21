@@ -35,6 +35,10 @@
 
 void testMain(void)
 {
+#if _TEST_ENABLE_I2C_MUX == 1
+	testMuxMain();
+#endif
+
 #if _TEST_ENABLE_VCP == 1
   testVcpMain();
 #endif

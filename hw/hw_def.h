@@ -43,22 +43,12 @@
 #define _USE_HW_LED
 //#define _USE_HW_BUTTON
 #define _USE_HW_UART
-//#define _USE_HW_EEPROM
-//#define _USE_HW_FLASH
-//#define _USE_HW_BUZZER
 //#define _USE_HW_RESET
-//#define _USE_HW_DXL
-//#define _USE_HW_DXLPORT
 //#define _USE_HW_MIC
-//#define _USE_HW_DXLCMD
 //#define _USE_HW_ADC
-//#define _USE_HW_RC100
 #define _USE_HW_I2C
 //#define _USE_HW_IMU
-//#define _USE_HW_OLLO
 //#define _USE_HW_LOG
-//#define _USE_HW_DXLMODEL
-//#define _USE_HW_TASK
 //#define _USE_HW_CTABLE
 #define _USE_HW_TCS34725
 #define _USE_HW_TCA9548A
@@ -66,24 +56,16 @@
 //
 #define _USE_HW_CMDIF_LED
 //#define _USE_HW_CMDIF_BUTTON
-//#define _USE_HW_CMDIF_EEPROM
-//#define _USE_HW_CMDIF_FLASH
-//#define _USE_HW_CMDIF_BUZZER
 //#define _USE_HW_CMDIF_RESET
 //#define _USE_HW_CMDIF_MIC
-//#define _USE_HW_CMDIF_DXLCMD
 //#define _USE_HW_CMDIF_ADC
-//#define _USE_HW_CMDIF_RC100
 #define _USE_HW_CMDIF_I2C
 //#define _USE_HW_CMDIF_IMU
-//#define _USE_HW_CMDIF_OLLO
-//#define _USE_HW_CMDIF_TASK
 #define _USE_HW_CMDIF_TCS34725
 #define _USE_HW_CMDIF_TCA9548A
 
 
 #define _HW_DEF_BUZZER_TIMER                  _DEF_TIMER1
-#define _HW_DEF_MOTION_TIMER                  _DEF_TIMER2
 #define _HW_DEF_SW_TIMER                      _DEF_TIMER3
 #define _HW_DEF_POWER_ADC_CH                  _DEF_ADC6
 
@@ -97,7 +79,7 @@
 #define _HW_DEF_SW_TIMER_MAX                  8
 #define _HW_DEF_DXLPORT_MAX_CH                4
 #define _HW_DEF_ADC_MAX_CH                    6
-#define _HW_DEF_I2C_MAX_CH      				  1
+#define _HW_DEF_I2C_MAX_CH      			  1
 
 
 #define _HW_DEF_LED_MANAGE                    3  // RED
