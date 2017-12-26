@@ -33,7 +33,12 @@ bool tca9548aInit(void)
 
 bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch)
 {
-  if (ch > 7) return false;
+  if (ch > 8) return false;
+  if (ch == 8)
+  {
+	  writeReg(i2c_ch, id, 0xFF);
+	  return true;
+  }
 
   writeReg(i2c_ch, id, 1<<ch);
   return true;

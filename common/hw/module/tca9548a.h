@@ -16,7 +16,6 @@
 #include "math.h"
 #include "hw_def.h"
 #include "tcs34725.h"
-
 #ifdef _USE_HW_TCA9548A
 
 #include "bsp.h"
@@ -26,6 +25,8 @@
 #define TCAADDR 0x70
 
 bool tca9548aInit(void);
+bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch);
+
 err_code_t tcaI2CTransmit(uint8_t ch, uint8_t addr, uint8_t *p_data, uint32_t length, uint32_t timeout);
 
 
