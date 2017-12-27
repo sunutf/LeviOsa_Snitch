@@ -20,7 +20,13 @@
 
 #include "bsp.h"
 
-
+#define TCS34725_R_Coef 0.136
+#define TCS34725_G_Coef 1.000
+#define TCS34725_B_Coef -0.444
+#define TCS34725_GA 1.0
+#define TCS34725_DF 310.0
+#define TCS34725_CT_Coef 3810.0
+#define TCS34725_CT_Offset 1391.0
 
 
 #define TCS34725_ADDRESS          (0x29)
@@ -108,6 +114,7 @@ typedef struct
 
   uint16_t color_temp;
   uint16_t lux;
+  uint16_t float_lux;
 
   tcs34725Gain_t            _tcs34725Gain;
   tcs34725IntegrationTime_t _tcs34725IntegrationTime;
@@ -125,8 +132,12 @@ void tcs34725Lock(tcs34725_t *p_tcs);
 void tcs34725Unlock(tcs34725_t *p_tcs);
 
 void tcs34725GetRGBC(tcs34725_t *p_tcs);
+void tcs34725GetRGBCnDelay(tcs34725_t *p_tcs);
+
 uint16_t tcs34725CalculateColorTemperature(tcs34725_t *p_tcs);
 uint16_t tcs34725CalculateLux(tcs34725_t *p_tcs);
+float tcs34725CalculateNewLux(tcs34725_t *p_tcs);
+
 
 #endif
 

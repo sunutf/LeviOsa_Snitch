@@ -90,33 +90,44 @@ bool tcs34725Begin(tcs34725_t *p_tcs, uint8_t i2c_ch, tcs34725IntegrationTime_t 
 
 void tcs34725GetRGBC(tcs34725_t *p_tcs)
 {
+/* Set a delay for the integration time */
+  switch (p_tcs->_tcs34725IntegrationTime)
+  {
+	case TCS34725_INTEGRATIONTIME_2_4MS:
+	  delay(3);
+	  break;
+	case TCS34725_INTEGRATIONTIME_24MS:
+	  delay(24);
+	  break;
+	case TCS34725_INTEGRATIONTIME_50MS:
+	  delay(50);
+	  break;
+	case TCS34725_INTEGRATIONTIME_101MS:
+	  delay(101);
+	  break;
+	case TCS34725_INTEGRATIONTIME_154MS:
+	  delay(154);
+	  break;
+	case TCS34725_INTEGRATIONTIME_700MS:
+	  delay(700);
+	  break;
+  }
+
   p_tcs->c_value = readRegWord(p_tcs, TCS34725_CDATAL);
   p_tcs->r_value = readRegWord(p_tcs, TCS34725_RDATAL);
   p_tcs->g_value = readRegWord(p_tcs, TCS34725_GDATAL);
   p_tcs->b_value = readRegWord(p_tcs, TCS34725_BDATAL);
 
-  /* Set a delay for the integration time */
-  switch (p_tcs->_tcs34725IntegrationTime)
-  {
-    case TCS34725_INTEGRATIONTIME_2_4MS:
-      delay(3);
-      break;
-    case TCS34725_INTEGRATIONTIME_24MS:
-      delay(24);
-      break;
-    case TCS34725_INTEGRATIONTIME_50MS:
-      delay(50);
-      break;
-    case TCS34725_INTEGRATIONTIME_101MS:
-      delay(101);
-      break;
-    case TCS34725_INTEGRATIONTIME_154MS:
-      delay(154);
-      break;
-    case TCS34725_INTEGRATIONTIME_700MS:
-      delay(700);
-      break;
-  }
+
+}
+
+void tcs34725GetRGBCnDelay(tcs34725_t *p_tcs)
+{
+  p_tcs->c_value = readRegWord(p_tcs, TCS34725_CDATAL);
+  p_tcs->r_value = readRegWord(p_tcs, TCS34725_RDATAL);
+  p_tcs->g_value = readRegWord(p_tcs, TCS34725_GDATAL);
+  p_tcs->b_value = readRegWord(p_tcs, TCS34725_BDATAL);
+
 }
 
 uint16_t tcs34725CalculateColorTemperature(tcs34725_t *p_tcs)
@@ -162,6 +173,66 @@ uint16_t tcs34725CalculateLux(tcs34725_t *p_tcs)
 
   return (uint16_t)illuminance;
 }
+
+float tcs34725CalculateNewLux(tcs34725_t *p_tcs)
+{
+	uint16_t ir;
+	uint16_t r_comp;
+	uint16_t g_comp;
+	uint16_t b_comp;
+	uint16_t c_comp;
+	uint16_t r;
+	uint16_t g;
+	uint16_t b;
+	uint16_t c;
+	uint16_t againx;
+	uint16_t atime_ms;
+
+  float illuminance;
+  float cpl;
+
+  r = p_tcs->r_value;
+  g = p_tcs->g_value;
+  b = p_tcs->b_value;
+
+  switch(p_tcs->_tcs34725Gain)
+  {
+    case TCS34725_GAIN_1X:
+      againx = 1;
+      break;
+    case TCS34725_GAIN_4X:
+      againx = 4;
+      break;
+    case TCS34725_GAIN_16X:
+      againx = 16;
+      break;
+    case TCS34725_GAIN_60X:
+      againx = 60;
+      break;
+	}
+
+  atime_ms = ((256 - (int)p_tcs->_tcs34725IntegrationTime) * 2.4);
+
+
+  // DN40 calculations
+	ir = (r + g + b > c) ? (r + g + b - c) / 2 : 0;
+	r_comp = r - ir;
+	g_comp = g - ir;
+	b_comp = b - ir;
+	c_comp = c - ir;
+	cpl    = (atime_ms * againx) / (TCS34725_GA * TCS34725_DF);
+
+
+  /* This only uses RGB ... how can we integrate clear or calculate lux */
+  /* based exclusively on clear since this might be more reliable?      */
+  illuminance = (TCS34725_R_Coef * (float)r_comp + TCS34725_G_Coef * (float)g_comp + TCS34725_B_Coef * (float)b_comp) / cpl;
+
+  p_tcs->float_lux = illuminance;
+
+  return illuminance;
+}
+
+
 
 void tcs34725SetIntegrationTime(tcs34725_t *p_tcs, tcs34725IntegrationTime_t it)
 {

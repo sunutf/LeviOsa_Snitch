@@ -34,13 +34,9 @@ bool tca9548aInit(void)
 bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch)
 {
   if (ch > 8) return false;
-  if (ch == 8)
-  {
-	  writeReg(i2c_ch, id, 0xFF);
-	  return true;
-  }
 
-  writeReg(i2c_ch, id, 1<<ch);
+  if (ch == 8)  writeReg(i2c_ch, id, 0xFF);
+  else          writeReg(i2c_ch, id, 1<<ch);
   return true;
 
 }
@@ -100,9 +96,25 @@ int tca9548aCmdif(int argc, char **argv)
     ret = false;
   }
 
-  if(argc == 2 && strcmp("demo", argv[1]) == 0)
+  if(argc == 3 && strcmp("demo", argv[1]) == 0)
   {
-	  testMuxMain();
+  	uint8_t ch = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
+
+  	switch(ch)
+  	{
+			case 0:
+				testMuxMain0();
+				break;
+
+			case 1:
+				testMuxMain1();
+				break;
+
+			case 2:
+				testMuxMain2();
+				break;
+  	}
+
   }
 
 
