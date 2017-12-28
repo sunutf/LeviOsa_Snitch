@@ -29,7 +29,7 @@ void rangeLuxCalculate(uint16_t *buf, float *source, float *nature)
 	source_lux +=  (float)((diff_luxA-diff_luxB)*(diff_luxA-diff_luxB));
 	source_lux =   sqrtf(source_lux);
 
-	nature_lux = (float)buf[0];
+	nature_lux = ((float)buf[0]+(float)buf[2]-source_lux)/2;
 
 	*source = source_lux;
 	*nature = nature_lux;

@@ -74,7 +74,7 @@ int tca9548aCmdif(int argc, char **argv)
 
 	  i2c_ch--;
 	  id--;
-      ch--;
+		ch--;
 
       ret = tcaSelect(i2c_ch, id, ch);
       if (ret == false)
@@ -96,22 +96,23 @@ int tca9548aCmdif(int argc, char **argv)
     ret = false;
   }
 
-  if(argc == 3 && strcmp("demo", argv[1]) == 0)
+  if(argc == 4 && strcmp("demo", argv[1]) == 0)
   {
   	uint8_t ch = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
+  	uint8_t gain = (uint8_t) strtoul((const char * ) argv[3], (char **)NULL, (int) 0);
 
   	switch(ch)
   	{
 			case 0:
-				testMuxMain0();
+				testMuxMain0(gain);
 				break;
 
 			case 1:
-				testMuxMain1();
+				testMuxMain1(gain);
 				break;
 
 			case 2:
-				testMuxMain2();
+				testMuxMain2(gain);
 				break;
   	}
 
