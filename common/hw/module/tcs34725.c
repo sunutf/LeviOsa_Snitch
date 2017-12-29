@@ -194,6 +194,7 @@ float tcs34725CalculateNewLux(tcs34725_t *p_tcs)
   r = p_tcs->r_value;
   g = p_tcs->g_value;
   b = p_tcs->b_value;
+  c = p_tcs->c_value;
 
   switch(p_tcs->_tcs34725Gain)
   {

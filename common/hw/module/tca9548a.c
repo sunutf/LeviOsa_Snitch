@@ -66,15 +66,15 @@ int tca9548aCmdif(int argc, char **argv)
 
     if ((i2c_ch-1) < I2C_MAX_CH)
     {
-	  if((id*ch == 0))
-	  {
-		  cmdifPrintf("fail : id or ch error \n");
-		  return 0;
-	  }
+			if((id*ch == 0))
+			{
+				cmdifPrintf("fail : id or ch error \n");
+				return 0;
+			}
 
-	  i2c_ch--;
-	  id--;
-		ch--;
+			i2c_ch--;
+			id--;
+			ch--;
 
       ret = tcaSelect(i2c_ch, id, ch);
       if (ret == false)
@@ -113,6 +113,10 @@ int tca9548aCmdif(int argc, char **argv)
 
 			case 2:
 				testMuxMain2(gain);
+				break;
+
+			case 3:
+				testMuxMain3(gain);
 				break;
   	}
 
