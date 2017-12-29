@@ -41,6 +41,11 @@ bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch)
 
 }
 
+void tcaDeSelect(uint8_t i2c_ch, uint8_t id)
+{
+	writeReg(i2c_ch, id, 0);
+}
+
 void writeReg(uint8_t i2c_ch, uint8_t id,  uint8_t ch)
 {
 	i2cTransmitByte(i2c_ch, TCAADDR|id, ch);
@@ -91,12 +96,9 @@ int tca9548aCmdif(int argc, char **argv)
 
     cmdifPrintf("Open ID : %d, Ch : %d \n", id, ch);
   }
-  else
-  {
-    ret = false;
-  }
 
-  if(argc == 4 && strcmp("demo", argv[1]) == 0)
+
+  else if(argc == 4 && strcmp("demo", argv[1]) == 0)
   {
   	uint8_t ch = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
   	uint8_t gain = (uint8_t) strtoul((const char * ) argv[3], (char **)NULL, (int) 0);
@@ -122,6 +124,21 @@ int tca9548aCmdif(int argc, char **argv)
 
   }
 
+  else if(argc == 4 && strcmp("close", argv[3]) == 0)
+  {
+  	uint8_t i2c_ch = (uint8_t) strtoul((const char * ) argv[1], (char **)NULL, (int) 0);
+		uint8_t ch = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
+
+		i2c_ch--;
+		ch--;
+
+		tcaDeSelect(i2c_ch,ch);
+  }
+
+  else
+	{
+  	ret = false;
+	}
 
   if (ret == false)
   {

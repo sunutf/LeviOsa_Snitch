@@ -22,8 +22,7 @@ void testMuxMain0(uint8_t gain)
 
 	tcs34725_t tcs34725;
 	tcs34725_t tcs34725_list[NUM_CH];
-	float   source_lux[((NUM_CH-1)/3)+1];
-	float   nature_lux[((NUM_CH-1)/3)+1];
+
 	uint8_t    i2c_ch = 0;
 	uint8_t    id     = 0;
 	uint8_t    ch     = 0;
@@ -105,8 +104,7 @@ void testMuxMain1(uint8_t gain)
 
 	tcs34725_t tcs34725;
 	tcs34725_t tcs34725_list[NUM_CH];
-	float   source_lux[((NUM_CH-1)/3)+1];
-	float   nature_lux[((NUM_CH-1)/3)+1];
+
 	uint8_t    i2c_ch = 0;
 	uint8_t    id     = 0;
 	uint8_t    ch     = 0;
