@@ -13,6 +13,8 @@ void testMuxMain0(uint8_t gain);
 void testMuxMain1(uint8_t gain);
 void testMuxMain2(uint8_t gain);
 void testMuxMain3(uint8_t gain);
+void testMultiMuxMain(uint8_t gain);
+
 
 
 

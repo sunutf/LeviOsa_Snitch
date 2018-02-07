@@ -13,8 +13,8 @@
 #include "tca9548a.h"
 #include "range_lux/range_lux.h"
 
-#define NUM_CH   6
-
+#define NUM_CH   12
+#define MAX_CH_PER_MUX 6
 
 void testMuxMain0(uint8_t gain)
 {
@@ -93,7 +93,7 @@ void testMuxMain0(uint8_t gain)
 		cmdifPrintf("\n");
 
 
-
+		tcaDeSelect(i2c_ch, id);
 	}
 }
 
@@ -175,8 +175,9 @@ void testMuxMain1(uint8_t gain)
 		cmdifPrintf("\n");
 
 
-
+		tcaDeSelect(i2c_ch, id);
 	}
+
 }
 
 
@@ -202,6 +203,7 @@ void testMuxMain2(uint8_t gain)
 		t_micros = micros();
 
 		/*Write command to all channel*/
+
 		ret  = tcaSelect(i2c_ch, id, 8);
 		tcs34725Begin(&tcs34725, i2c_ch, TCS34725_INTEGRATIONTIME_154MS, gain);
 		for(ch = 0; ch < NUM_CH ; ch++)
@@ -262,7 +264,10 @@ void testMuxMain2(uint8_t gain)
 			cmdifPrintf("src : %04.04f, cons : %04.04f", source_lux[ch], nature_lux[ch]);
 		}
 		cmdifPrintf("\n");
+		tcaDeSelect(i2c_ch, id);
 	}
+
+
 
 }
 
@@ -287,7 +292,7 @@ void testMuxMain3(uint8_t gain)
 
 		/*Write command to all channel*/
 		ret  = tcaSelect(i2c_ch, id, 8);
-		tcs34725Begin(&tcs34725, i2c_ch, TCS34725_INTEGRATIONTIME_154MS, gain);
+		tcs34725Begin(&tcs34725, i2c_ch, TCS34725_INTEGRATIONTIME_50MS, gain);
 		for(ch = 0; ch < NUM_CH ; ch++)
 		{
 			tcs34725_list[ch].ch = tcs34725.ch;
@@ -333,7 +338,7 @@ void testMuxMain3(uint8_t gain)
 			lux_buf[(ch/3)][(ch%3)] = tcs34725CalculateNewLux(&tcs34725_list[ch]);
 		}
 
-		for(uint8_t lux_buf_index = 0; lux_buf_index< (NUM_CH/3); lux_buf_index++)
+		for(uint8_t lux_buf_index = 0; lux_buf_index < (NUM_CH/3); lux_buf_index++)
 		{
 			rangeLuxCalculate(&lux_buf[lux_buf_index], &source_lux[lux_buf_index], &nature_lux[lux_buf_index]);
 		}
@@ -346,10 +351,112 @@ void testMuxMain3(uint8_t gain)
 			cmdifPrintf("src : %04.04f, cons : %04.04f", source_lux[ch], nature_lux[ch]);
 		}
 		cmdifPrintf("\n");
+
+		tcaDeSelect(i2c_ch, id);
 	}
+
+
 
 }
 
+void testMultiMuxMain(uint8_t gain)
+{
+	bool ret = TRUE;
+
+	tcs34725_t tcs34725;
+	tcs34725_t tcs34725_list[NUM_CH];
+
+	uint8_t    i2c_ch = 0;
+	uint8_t    id     = 0;
+	uint8_t    ch     = 0;
+	uint16_t   lux_buf[((NUM_CH-1)/3)+1][3];
+	uint32_t   t_micros;
+  uint8_t    test;
+
+	while(cmdifRxAvailable() == 0)
+	{
+		t_micros = micros();
+
+   /////
 
 
+		/*Write command to all channel*/
+		for(id = 0; id < (NUM_CH/MAX_CH_PER_MUX); id++)
+		{
+			ret  = tcaSelect(i2c_ch, id, 8);
+			tcs34725Begin(&tcs34725, i2c_ch, TCS34725_INTEGRATIONTIME_154MS, gain);
+			for(ch = 0; ch < MAX_CH_PER_MUX ; ch++)
+			{
+				tcs34725_list[id*MAX_CH_PER_MUX+ch].ch = tcs34725.ch;
+				tcs34725_list[id*MAX_CH_PER_MUX+ch]._tcs34725IntegrationTime = tcs34725._tcs34725IntegrationTime;
+				tcs34725_list[id*MAX_CH_PER_MUX+ch]._tcs34725Gain = tcs34725._tcs34725Gain;
+				tcs34725_list[id*MAX_CH_PER_MUX+ch].init = tcs34725.init;
+			}
+			tcaDeSelect(i2c_ch, id);
+		}
+
+	 /* Set a delay for the integration time */
+		switch(tcs34725._tcs34725IntegrationTime)
+		{
+		case TCS34725_INTEGRATIONTIME_2_4MS:
+		  delay(3);
+		  break;
+		case TCS34725_INTEGRATIONTIME_24MS:
+		  delay(24);
+		  break;
+		case TCS34725_INTEGRATIONTIME_50MS:
+		  delay(50);//default 50
+		  break;
+		case TCS34725_INTEGRATIONTIME_101MS:
+		  delay(101);
+		  break;
+		case TCS34725_INTEGRATIONTIME_154MS:
+		  delay(154);
+		  break;
+		case TCS34725_INTEGRATIONTIME_700MS:
+		  delay(700);
+		  break;
+		}
+
+		delay(5);
+
+		id = 0;
+		for(ch = 0; ch < NUM_CH ; ch++)
+		{
+			if(0==(ch%MAX_CH_PER_MUX))
+			{
+				tcaDeSelect(i2c_ch, id);
+				if(0!=id)
+				{
+					id++;
+				}
+
+			}
+			ret  = tcaSelect(i2c_ch, id, (ch%MAX_CH_PER_MUX));
+			if (ret == false)
+			{
+				cmdifPrintf("fail : tca9548a num error\n");
+				break;
+			}
+			tcs34725GetRGBCnDelay(&tcs34725_list[ch]);
+			lux_buf[(ch/3)][(ch%3)] = tcs34725CalculateNewLux(&tcs34725_list[ch]);
+		}
+
+
+
+		t_micros = micros() - t_micros;
+		cmdifPrintf("Time : %d  ", t_micros);
+
+		cmdifPrintf("Result");
+		for(ch = 0; ch < NUM_CH; ch++)
+		{
+			cmdifPrintf("%d, ", lux_buf[(ch/3)][(ch%3)]);
+		}
+		cmdifPrintf("\n");
+
+
+		tcaDeSelect(i2c_ch, id);
+	}
+
+}
 
