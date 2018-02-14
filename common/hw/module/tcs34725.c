@@ -370,6 +370,36 @@ int tcs34725Cmdif(int argc, char **argv)
 
   return 0;
 }
+
+void tcs34725WaitForIntegration(tcs34725_t* p_tcs)
+{
+	switch(p_tcs->_tcs34725IntegrationTime)
+		{
+			case TCS34725_INTEGRATIONTIME_2_4MS:
+				delay(3);
+				break;
+
+			case TCS34725_INTEGRATIONTIME_24MS:
+				delay(24);
+				break;
+
+			case TCS34725_INTEGRATIONTIME_50MS:
+				delay(50);//default 50
+				break;
+
+			case TCS34725_INTEGRATIONTIME_101MS:
+				delay(101);
+				break;
+
+			case TCS34725_INTEGRATIONTIME_154MS:
+				delay(154);
+				break;
+
+			case TCS34725_INTEGRATIONTIME_700MS:
+				delay(700);
+				break;
+		}
+}
 #endif
 
 #endif

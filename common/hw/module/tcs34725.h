@@ -137,6 +137,8 @@ void tcs34725GetRGBCnDelay(tcs34725_t *p_tcs);
 uint16_t tcs34725CalculateColorTemperature(tcs34725_t *p_tcs);
 uint16_t tcs34725CalculateLux(tcs34725_t *p_tcs);
 float tcs34725CalculateNewLux(tcs34725_t *p_tcs);
+void tcs34725WaitForIntegration(tcs34725_t* p_tcs);
+
 
 
 #endif
