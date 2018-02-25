@@ -44,11 +44,12 @@ bool tcaSelect(uint8_t i2c_ch, uint8_t id, uint8_t ch)
 void tcaDeSelect(uint8_t i2c_ch, uint8_t id)
 {
 	writeReg(i2c_ch, id, 0);
+ // delay(10);
 }
 
 void writeReg(uint8_t i2c_ch, uint8_t id,  uint8_t ch)
 {
-	i2cTransmitByte(i2c_ch, TCAADDR|id, ch);
+	i2cTransmitByte(i2c_ch, (TCAADDR+id), ch);
 }
 
 #ifdef _USE_HW_CMDIF_TCA9548A
@@ -105,19 +106,23 @@ int tca9548aCmdif(int argc, char **argv)
 
   	switch(ch)
   	{
-			case 0:
+  		case 0:
+					testMultiMuxMain(gain);
+					break;
+
+			case 1:
 				testMuxMain0(gain);
 				break;
 
-			case 1:
+			case 2:
 				testMuxMain1(gain);
 				break;
 
-			case 2:
+			case 3:
 				testMuxMain2(gain);
 				break;
 
-			case 3:
+			case 4:
 				testMuxMain3(gain);
 				break;
   	}

@@ -71,7 +71,7 @@ bool drvI2CBegin(uint8_t ch, uint32_t freq)
 
 
   I2cHandle[0].Instance             = I2C3;
-  I2cHandle[0].Init.ClockSpeed      = 400000;
+  I2cHandle[0].Init.ClockSpeed      = 100000;
   I2cHandle[0].Init.DutyCycle       = I2C_DUTYCYCLE_2;
   I2cHandle[0].Init.OwnAddress1     = 0x00;
   I2cHandle[0].Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
