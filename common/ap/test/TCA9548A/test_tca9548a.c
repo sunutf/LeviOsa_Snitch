@@ -346,7 +346,6 @@ void testMuxMain3(uint8_t gain)
 			cmdifPrintf("src : %04.04f, cons : %04.04f", source_lux[ch], nature_lux[ch]);
 		}
 		cmdifPrintf("\n");
-		cmdifPrintf("\n");
 	}
 
 }

@@ -10,7 +10,6 @@
 
 
 
-#include "hw.h"
 void rangeLuxCalculate(uint16_t *buf, float *source, float *nature);
 
 

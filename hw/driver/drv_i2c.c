@@ -106,7 +106,7 @@ err_code_t drvI2CTransmit(uint8_t ch, uint8_t addr, uint8_t *p_data, uint32_t le
 
   for (i=0; i<3; i++)
   {
-    ret = HAL_I2C_Master_Transmit(&I2cHandle[ch], (uint16_t)(addr >> 1), p_data, length, timeout);
+    ret = HAL_I2C_Master_Transmit(&I2cHandle[ch], (uint16_t)(addr << 1), p_data, length, timeout);
 
     if( ret == HAL_OK )
     {
