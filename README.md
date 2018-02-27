@@ -1,2 +1,5 @@
 # LeviOsa_Snitch
-Create new drone User Interface like magic spell 'Wingardium LeviOsa'
+
+New drone User Interface like magic spell 'Wingardium LeviOsa'
+
+The purpose of this repository is related to the drone 'Snitch'
