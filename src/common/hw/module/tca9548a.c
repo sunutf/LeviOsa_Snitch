@@ -107,15 +107,15 @@ int tca9548aCmdif(int argc, char **argv)
   	switch(ch)
   	{
   		case 0:
-					testMultiMuxMain(gain);
-					break;
+				testMultiMuxMain(gain);
+				break;
 
 			case 1:
-				testMuxMain0(gain);
+				testAdcI2CMuxMain(gain);
 				break;
 
 			case 2:
-				testMuxMain1(gain);
+				testRangeAdcI2CMuxMain(gain);
 				break;
 
 			case 3:

@@ -52,6 +52,7 @@
 //#define _USE_HW_CTABLE
 #define _USE_HW_TCS34725
 #define _USE_HW_TCA9548A
+#define _USE_HW_MUX
 //
 //
 #define _USE_HW_CMDIF_LED
@@ -63,6 +64,7 @@
 //#define _USE_HW_CMDIF_IMU
 #define _USE_HW_CMDIF_TCS34725
 #define _USE_HW_CMDIF_TCA9548A
+#define _USE_HW_CMDIF_MUX
 
 
 #define _HW_DEF_BUZZER_TIMER                  _DEF_TIMER1
@@ -77,9 +79,9 @@
 #define _HW_DEF_UART_CH_MAX                   2
 #define _HW_DEF_TIMER_CH_MAX                  3
 #define _HW_DEF_SW_TIMER_MAX                  8
-#define _HW_DEF_DXLPORT_MAX_CH                4
 #define _HW_DEF_ADC_MAX_CH                    6
-#define _HW_DEF_I2C_MAX_CH      			  1
+#define _HW_DEF_I2C_MAX_CH 			      			  1
+#define _HW_DEF_MUX_CH_MAX										1
 
 
 #define _HW_DEF_LED_MANAGE                    3  // RED
@@ -92,16 +94,6 @@
 #define _HW_DEF_BUTTON_START                  1
 
 #define _HW_DEF_RTOS_MEM_SIZE(x)              ((x)/4)
-
-#define _HW_DEF_FLASH_ADDR_MOTION_LENGTH      (512*1024)
-#define _HW_DEF_FLASH_ADDR_MOTION_START       0x8080000
-#define _HW_DEF_FLASH_ADDR_MOTION_END         (_HW_DEF_FLASH_ADDR_MOTION_START + _HW_DEF_FLASH_ADDR_MOTION_LENGTH)
-
-#define _HW_DEF_FLASH_ADDR_TASK_LENGTH        (64*1024)
-#define _HW_DEF_FLASH_ADDR_TASK_START         0x8010000
-#define _HW_DEF_FLASH_ADDR_TASK_END           (_HW_DEF_FLASH_ADDR_TASK_START + _HW_DEF_FLASH_ADDR_TASK_LENGTH)
-
-
 
 
 

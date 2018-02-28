@@ -51,6 +51,7 @@ void hwInit(void)
 
   ledInit();
  // buttonInit();
+  muxInit();
 
   bspInitUSB();
 

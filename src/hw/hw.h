@@ -26,6 +26,7 @@
 
 #include "wdg.h"
 #include "i2c.h"
+#include "mux.h"
 
 
 
