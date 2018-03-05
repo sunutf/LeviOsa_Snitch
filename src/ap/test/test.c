@@ -10,6 +10,11 @@
 #include "test.h"
 #include "test_def.h"
 
+#include "vcp/test_vcp.h"
+#include "led/test_led.h"
+#include "uart/test_uart.h"
+#include "button/test_button.h"
+
 
 
 //-- Internal Variables
@@ -55,9 +60,6 @@ void testMain(void)
   testButtonMain();
 #endif
 
-#if _TEST_ENABLE_DXL == 1
-  testDxlMain();
-#endif
 }
 
 

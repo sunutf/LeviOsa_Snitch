@@ -124,7 +124,7 @@ typedef struct
 
 
 
-bool tcs34725Init(void);
+void tcs34725Init(void);
 bool tcs34725Begin(tcs34725_t *p_tcs, uint8_t i2c_ch, tcs34725IntegrationTime_t it, tcs34725Gain_t gain);
 void tcs34725Enable(tcs34725_t *p_tcs);
 void tcs34725Disable(tcs34725_t *p_tcs);

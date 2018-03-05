@@ -54,12 +54,11 @@ float powf(const float x, const float y);
 
 
 
-bool tcs34725Init(void)
+void tcs34725Init(void)
 {
 #ifdef _USE_HW_CMDIF_TCS34725
   tcs34725CmdifInit();
 #endif
-  return true;
 }
 
 bool tcs34725Begin(tcs34725_t *p_tcs, uint8_t i2c_ch, tcs34725IntegrationTime_t it, tcs34725Gain_t gain)

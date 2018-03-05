@@ -119,7 +119,7 @@ int tca9548aCmdif(int argc, char **argv)
 				break;
 
 			case 3:
-				testMuxMain2(gain);
+				testAdcI2cMuxConvDist(gain);
 				break;
 
 			case 4:

@@ -10,7 +10,7 @@
 
 #include "hw.h"
 #include "math.h"
-
+#include "range_lux.h"
 
 
 void rangeLuxCalculate(uint16_t *buf, float *source, float *nature)

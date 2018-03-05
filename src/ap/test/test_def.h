@@ -12,10 +12,10 @@
 
 #define _TEST_ENABLE_VCP        0
 #define _TEST_ENABLE_LED        0
-#define _TEST_ENABLE_UART       0
+#define _TEST_ENABLE_UART       1
 #define _TEST_ENABLE_BUTTON     0
 #define _TEST_ENABLE_DXL        0
-#define _TEST_ENABLE_I2C_MUX    1
+#define _TEST_ENABLE_I2C_MUX    0
 
 
 

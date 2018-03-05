@@ -16,6 +16,8 @@ void testMuxMain3(uint8_t gain);
 void testMultiMuxMain(uint8_t gain);
 void testAdcI2CMuxMain(uint8_t gain);
 void testRangeAdcI2CMuxMain(uint8_t gain);
+void testAdcI2cMuxConvDist(uint8_t gain);
+
 
 
 

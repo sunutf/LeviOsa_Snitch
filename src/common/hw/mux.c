@@ -38,7 +38,7 @@ int  muxCmdif(int argc, char **argv);
 //
 
 
-bool muxInit(void)
+void muxInit(void)
 {
 	uint8_t i;
 
@@ -125,9 +125,7 @@ int muxCmdif(int argc, char **argv)
 		{
     	ret_ch = muxGetIdnch(0);
     	cmdifPrintf( "%d \n", ret_ch);
-
 		}
-
     else
     {
       ret = false;

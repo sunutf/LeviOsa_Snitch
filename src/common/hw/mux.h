@@ -17,10 +17,10 @@
 #ifdef _USE_HW_MUX
 #define MUX_MAX_CH   _HW_DEF_MUX_CH_MAX
 
- #include "bsp.h"
+#include "bsp.h"
 
 
- bool muxInit(void);
+void muxInit(void);
 
 
 void muxEnable(uint8_t ch);

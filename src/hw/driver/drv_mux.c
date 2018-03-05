@@ -31,6 +31,7 @@
 
 #define LOW 0
 #define HIGH 1
+#define is_valid(__state__) (LOW == (__state__))
 
 typedef struct
 {
@@ -86,22 +87,7 @@ bool drvMuxInit(void)
 	drv_mux_tbl[2].drv_mux_ch_tbl[2].gpio.pin  = GPIO_PIN_13;
 	drv_mux_tbl[2].drv_mux_ch_tbl[3].gpio.port = GPIOB;
 	drv_mux_tbl[2].drv_mux_ch_tbl[3].gpio.pin  = GPIO_PIN_14;
-
-	for (i=0; i<_HW_DEF_MUX_CH_MAX; i++)
-  {
-		for(j=0; j<4; j++)
-		{
-			if (drv_mux_tbl[i].drv_mux_ch_tbl[j].gpio.port != NULL)
-			{
-				GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
-				GPIO_InitStruct.Pull  = GPIO_PULLUP;
-				GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-				GPIO_InitStruct.Pin   = drv_mux_tbl[i].drv_mux_ch_tbl[j].gpio.pin;
-				HAL_GPIO_Init(drv_mux_tbl[i].drv_mux_ch_tbl[j].gpio.port, &GPIO_InitStruct);
-			}
-		}
-  }
-	*/
+   */
 
   drv_mux_tbl[0].drv_mux_ch_tbl[0].gpio.port = GPIOD;
 	drv_mux_tbl[0].drv_mux_ch_tbl[0].gpio.pin  = GPIO_PIN_3;
@@ -147,7 +133,7 @@ bool drvMuxSetChtoId(uint8_t id, uint8_t ch)
 
 	mux_state = drv_mux_tbl[id].drv_mux_ch_tbl[0].pin_state;
 
-	if(LOW == mux_state)
+	if(is_valid(mux_state))
 	{
 		if(ch<8)
 		{
@@ -171,7 +157,7 @@ uint8_t drvMuxGetChfromId(uint8_t id)
 
 	mux_state = drv_mux_tbl[id].drv_mux_ch_tbl[0].pin_state;
 
-	if(LOW == mux_state)
+	if(is_valid(mux_state))
 	{
 		for(i=1; i<4;i++)
 		{
