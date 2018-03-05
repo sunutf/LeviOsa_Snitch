@@ -15,7 +15,7 @@
 #include "lkup_tbl/lkup_tbl.h"
 
 #define MAX_CH_PER_MUX 6
-#define NUM_MUX        2
+#define NUM_MUX        1
 
 #define NUM_SENSOR   (NUM_MUX*MAX_CH_PER_MUX)
 

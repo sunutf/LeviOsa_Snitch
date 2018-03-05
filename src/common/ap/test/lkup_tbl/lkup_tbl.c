@@ -9,74 +9,39 @@
 #include "hw.h"
 #include "lkup_tbl.h"
 
-#define NUM_OF_STEP 60
+#define NUM_OF_STEP (((END_POINT-INIT_POINT)/STEP_SIZE)+1)
 #define NUM_OF_STEP_FOR_INTERPOLAR 10 // resoluton = STEP_SIZE /NUM_OF_STEP_FOR_INTERPOLAR
 #define STEP_SIZE   5 //cm
+#define INIT_POINT  200 //mm
+#define END_POINT   1300 //mm
 
 #define RESOLUTION (STEP_SIZE*10/NUM_OF_STEP_FOR_INTERPOLAR) //mm
 
 float lkup_tbl_t[NUM_OF_STEP]=
 		{
-				8000,
-				6000,
-				2000,
-				500,
-				300,
-				200,
-				54,
-				53,
-				52,
-				51,
-				50,
-				49,
-				48,
-				47,
-				46,
-				45,
-				44,
-				43,
-				42,
-				41,
-				40,
-				39,
-				38,
-				37,
-				36,
-				35,
-				34,
-				33,
-				32,
-				31,
-				30,
-				29,
-				28,
-				27,
-				26,
-				25,
-				24,
-				23,
-				22,
-				21,
-				20,
-				19,
-				18,
-				17,
-				16,
-				15,
-				14,
-				13,
-				12,
-				11,
-				10,
-				9,
-				8,
-				7,
-				6,
-				5,
-				4,
-				3,
-				2,
-				1
+				2538.14,
+				1507,
+				1019,
+				727.69,
+				553.17,
+				415.4275,
+				337.0015,
+				276.58,
+				221.7115,
+				190.683,
+				162.04,
+				140.4635,
+				118.8781,
+				104.3456,
+				89.0505,
+				80.05,
+				73.7564,
+				66.7083,
+				60.4152,
+				53.3667,
+				50.2195,
+				47.0744,
+				43.1741,
 		};
 
 
@@ -137,7 +102,7 @@ uint32_t lkup_tblGetDist(const float lux_value)
 	order_of_step = lkup_tblSearch(lux_value); //Big Step
 	internal_step = lkup_tblInterpolation(lux_value, order_of_step); //Small Step
 
-	distance = (order_of_step*STEP_SIZE)*10 - internal_step*RESOLUTION;//Big Step(cm) - Small Step(mm)
+	distance = INIT_POINT + (order_of_step*STEP_SIZE)*10 - internal_step*RESOLUTION;//Big Step(cm) - Small Step(mm)
 	return	distance;
 }
 
