@@ -1,5 +1,5 @@
 /*
- * lkup.tbl.cpp
+ * lkup.tbl.c
  *
  *  Created on: 2018. 3. 5.
  *      Author: D.ggavy
@@ -137,7 +137,7 @@ uint32_t lkup_tblGetDist(const float lux_value)
 	order_of_step = lkup_tblSearch(lux_value); //Big Step
 	internal_step = lkup_tblInterpolation(lux_value, order_of_step); //Small Step
 
-	distance = (order_of_step*STEP_SIZE) - internal_step*RESOLUTION;//Big Step - Small Step
+	distance = (order_of_step*STEP_SIZE)*10 - internal_step*RESOLUTION;//Big Step(cm) - Small Step(mm)
 	return	distance;
 }
 
