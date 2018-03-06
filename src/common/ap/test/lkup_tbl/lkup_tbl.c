@@ -10,12 +10,12 @@
 #include "lkup_tbl.h"
 
 #define NUM_OF_STEP (((END_POINT-INIT_POINT)/STEP_SIZE)+1)
-#define NUM_OF_STEP_FOR_INTERPOLAR 10 // resoluton = STEP_SIZE /NUM_OF_STEP_FOR_INTERPOLAR
-#define STEP_SIZE   5 //cm
+#define NUM_OF_STEP_FOR_INTERPOLAR 20 // resoluton = STEP_SIZE /NUM_OF_STEP_FOR_INTERPOLAR
+#define STEP_SIZE   50 //mm
 #define INIT_POINT  200 //mm
 #define END_POINT   1300 //mm
 
-#define RESOLUTION (STEP_SIZE*10/NUM_OF_STEP_FOR_INTERPOLAR) //mm
+#define RESOLUTION ((float)STEP_SIZE/(float)NUM_OF_STEP_FOR_INTERPOLAR) //mm
 
 float lkup_tbl_t[NUM_OF_STEP]=
 		{
@@ -102,7 +102,7 @@ uint32_t lkup_tblGetDist(const float lux_value)
 	order_of_step = lkup_tblSearch(lux_value); //Big Step
 	internal_step = lkup_tblInterpolation(lux_value, order_of_step); //Small Step
 
-	distance = INIT_POINT + (order_of_step*STEP_SIZE)*10 - internal_step*RESOLUTION;//Big Step(cm) - Small Step(mm)
+	distance = INIT_POINT + (order_of_step*STEP_SIZE) - (uint32_t)(internal_step*RESOLUTION);//Big Step(cm) - Small Step(mm)
 	return	distance;
 }
 

@@ -637,7 +637,7 @@ void testAdcI2cMuxConvDist(uint8_t gain)
 	uint8_t    ch     = 0;
 	uint16_t   lux_buf[((NUM_SENSOR-1)/3)+1][3];
 	uint32_t   t_micros;
-	uint32_t   order;
+
 
 
 	tcs34725_t tcs34725;
@@ -713,7 +713,8 @@ void testAdcI2cMuxConvDist(uint8_t gain)
 
 		for(ch = 0; ch < (NUM_SENSOR/3); ch++)
 		{
-			cmdifPrintf(" distance : %d", lkup_tblGetDist(source_lux[ch]));
+			cmdifPrintf("src : %04.04f, f", source_lux[ch]);
+			cmdifPrintf(" distance : %d mm/ ", lkup_tblGetDist(source_lux[ch]));
 		}
 		cmdifPrintf("\n");
 

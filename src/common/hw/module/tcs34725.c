@@ -92,24 +92,24 @@ void tcs34725GetRGBC(tcs34725_t *p_tcs)
 /* Set a delay for the integration time */
   switch (p_tcs->_tcs34725IntegrationTime)
   {
-	case TCS34725_INTEGRATIONTIME_2_4MS:
-	  delay(3);
-	  break;
-	case TCS34725_INTEGRATIONTIME_24MS:
-	  delay(24);
-	  break;
-	case TCS34725_INTEGRATIONTIME_50MS:
-	  delay(50);
-	  break;
-	case TCS34725_INTEGRATIONTIME_101MS:
-	  delay(101);
-	  break;
-	case TCS34725_INTEGRATIONTIME_154MS:
-	  delay(154);
-	  break;
-	case TCS34725_INTEGRATIONTIME_700MS:
-	  delay(700);
-	  break;
+		case TCS34725_INTEGRATIONTIME_2_4MS:
+			delay(3);
+			break;
+		case TCS34725_INTEGRATIONTIME_24MS:
+			delay(24);
+			break;
+		case TCS34725_INTEGRATIONTIME_50MS:
+			delay(50);
+			break;
+		case TCS34725_INTEGRATIONTIME_101MS:
+			delay(101);
+			break;
+		case TCS34725_INTEGRATIONTIME_154MS:
+			delay(154);
+			break;
+		case TCS34725_INTEGRATIONTIME_700MS:
+			delay(700);
+			break;
   }
 
   p_tcs->c_value = readRegWord(p_tcs, TCS34725_CDATAL);
