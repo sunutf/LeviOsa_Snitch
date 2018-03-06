@@ -475,10 +475,11 @@ void testAdcI2CMuxMain(uint8_t gain)
 	for(id = 0; id < NUM_MUX; id++)
 	{
 		muxSetIdnCh(0,id);
+		ret  = tcaSelect(i2c_ch, id, ALL_CH);
+		tcs34725Begin(&tcs34725, i2c_ch, TCS34725_INTEGRATIONTIME_50MS, gain);
 		for(ch = 0; ch < MAX_CH_PER_MUX ; ch++)
 		{
-			ret  = tcaSelect(i2c_ch, id, ch);
-			tcs34725Begin(&tcs34725, i2c_ch, TCS34725_INTEGRATIONTIME_50MS, gain);
+
 
 			tcs34725_list[id*MAX_CH_PER_MUX+ch].ch = tcs34725.ch;
 			tcs34725_list[id*MAX_CH_PER_MUX+ch]._tcs34725IntegrationTime = tcs34725._tcs34725IntegrationTime;
