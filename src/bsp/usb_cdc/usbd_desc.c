@@ -57,9 +57,9 @@
 #define USBD_PID                      0xFF48
 
 #define USBD_LANGID_STRING            0x409
-#define USBD_MANUFACTURER_STRING      "ROBOTIS"
-#define USBD_PRODUCT_HS_STRING        "ROBOTIS ComPort"
-#define USBD_PRODUCT_FS_STRING        "ROBOTIS ComPort"
+#define USBD_MANUFACTURER_STRING      "LEVIOSA"
+#define USBD_PRODUCT_HS_STRING        "LEVIOSA ComPort"
+#define USBD_PRODUCT_FS_STRING        "LEVIOSA ComPort"
 #define USBD_CONFIGURATION_HS_STRING  "VCP Config"
 #define USBD_INTERFACE_HS_STRING      "VCP Interface"
 #define USBD_CONFIGURATION_FS_STRING  "VCP Config"
