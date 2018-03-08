@@ -64,6 +64,7 @@
 //#define _USE_HW_CMDIF_IMU
 #define _USE_HW_CMDIF_TCS34725
 #define _USE_HW_CMDIF_TCA9548A
+#define _USE_HW_CMDIF_LEVIOSA
 #define _USE_HW_CMDIF_MUX
 
 

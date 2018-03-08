@@ -63,6 +63,7 @@ void hwInit(void)
   i2cInit();
   tcs34725Init();
   tca9548aInit();
+  leviosa_boardInit();
 }
 
 

@@ -19,7 +19,7 @@
 //
 const volatile  __attribute__((section(".version"))) uint8_t fw_version_str[32] = "V171012R4";
 
-
+#define DEBUG
 static ap_t ap_control;
 
 ap_t *p_ap = &ap_control;
@@ -64,14 +64,17 @@ void apInit(void)
 
 void apMain(void)
 {
-//	testMain();
 
+#ifdef DEBUG
    cmdifBegin(_DEF_UART1, 115200);
 
   while(1)
   {
     cmdifMain();
   }
+#else
+  testMain();
+#endif
 }
 
 
