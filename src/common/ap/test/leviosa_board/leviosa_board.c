@@ -47,7 +47,7 @@ void leviosa_boardInit(void)
 	#endif
 }
 
-void leviosa_boardBegin(void)
+void leviosa_boardReady(void)
 {
 	for(id = 0; id < NUM_MUX; id++)
 	{
@@ -147,8 +147,9 @@ uint32_t* leviosa_boardGetDistance(void)
 void leviosa_boardLuxTest(uint8_t output)
 {
 	uint32_t   t_micros;
+	uint32_t*   output_lux;
 
-	leviosa_boardBegin();
+	leviosa_boardReady();
 	leviosa_boardSetCmd();
 
 	while(cmdifRxAvailable() == 0)
@@ -159,6 +160,7 @@ void leviosa_boardLuxTest(uint8_t output)
 		leviosa_boardCalcSource();
 		leviosa_boardConvDistance();
 
+		output_lux = leviosa_boardGetDistance();
 		t_micros = micros() - t_micros;
 		cmdifPrintf("Time : %d  ", t_micros);
 
@@ -173,7 +175,7 @@ void leviosa_boardLuxTest(uint8_t output)
 		{
 			for(ch = 0; ch < (NUM_SENSOR/3); ch++)
 			{
-				cmdifPrintf(" distance : %d mm/ ", distance_lux[ch]);
+				cmdifPrintf(" distance : %d mm/ ", output_lux[ch]);
 			}
 		}
 		///////////////////////////////////////

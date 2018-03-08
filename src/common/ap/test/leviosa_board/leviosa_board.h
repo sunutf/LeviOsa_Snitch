@@ -17,7 +17,7 @@
 #include "bsp.h"
 
  void leviosa_boardInit(void);
- void leviosa_boardBegin(void);
+ void leviosa_boardReady(void);
  void leviosa_boardSetCmd(void);
  void leviosa_boardGetCmd(void);
  void leviosa_boardCalcSource(void);
