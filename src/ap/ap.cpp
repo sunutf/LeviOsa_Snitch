@@ -19,7 +19,7 @@
 //
 const volatile  __attribute__((section(".version"))) uint8_t fw_version_str[32] = "V171012R4";
 
-#define DEBUG
+//#define DEBUG
 static ap_t ap_control;
 
 ap_t *p_ap = &ap_control;

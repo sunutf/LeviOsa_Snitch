@@ -69,7 +69,7 @@ void testUartMain(void)
   uint32_t t_micros;
   uint32_t t_tx_count = 0;
   uint32_t uart_tx_bytes = 0;
-  uint8_t  uart_ch = _DEF_UART3;
+  uint8_t  uart_ch = _DEF_UART2;
 
 
   swtimer_handle_t h_led_timer;

@@ -60,35 +60,6 @@ bool drvMuxInit(void)
   uint32_t i, j;
   GPIO_InitTypeDef  GPIO_InitStruct;
 
-  /*For SENSORXEL
-  drv_mux_tbl[0].drv_mux_ch_tbl[0].gpio.port = GPIOC;
-  drv_mux_tbl[0].drv_mux_ch_tbl[0].gpio.pin  = GPIO_PIN_13;
-  drv_mux_tbl[0].drv_mux_ch_tbl[1].gpio.port = GPIOB;
-	drv_mux_tbl[0].drv_mux_ch_tbl[1].gpio.pin  = GPIO_PIN_15;
-	drv_mux_tbl[0].drv_mux_ch_tbl[2].gpio.port = GPIOA;
-	drv_mux_tbl[0].drv_mux_ch_tbl[2].gpio.pin  = GPIO_PIN_11;
-	drv_mux_tbl[0].drv_mux_ch_tbl[3].gpio.port = GPIOA;
-	drv_mux_tbl[0].drv_mux_ch_tbl[3].gpio.pin  = GPIO_PIN_12;
-
-	drv_mux_tbl[1].drv_mux_ch_tbl[0].gpio.port = GPIOB;
-	drv_mux_tbl[1].drv_mux_ch_tbl[0].gpio.pin  = GPIO_PIN_10;
-	drv_mux_tbl[1].drv_mux_ch_tbl[1].gpio.port = GPIOA;
-	drv_mux_tbl[1].drv_mux_ch_tbl[1].gpio.pin  = GPIO_PIN_15;
-	drv_mux_tbl[1].drv_mux_ch_tbl[2].gpio.port = GPIOB;
-	drv_mux_tbl[1].drv_mux_ch_tbl[2].gpio.pin  = GPIO_PIN_6;
-	drv_mux_tbl[1].drv_mux_ch_tbl[3].gpio.port = GPIOB;
-	drv_mux_tbl[1].drv_mux_ch_tbl[3].gpio.pin  = GPIO_PIN_7;
-
-	drv_mux_tbl[2].drv_mux_ch_tbl[0].gpio.port = GPIOB;
-	drv_mux_tbl[2].drv_mux_ch_tbl[0].gpio.pin  = GPIO_PIN_11;
-	drv_mux_tbl[2].drv_mux_ch_tbl[1].gpio.port = GPIOB;
-	drv_mux_tbl[2].drv_mux_ch_tbl[1].gpio.pin  = GPIO_PIN_12;
-	drv_mux_tbl[2].drv_mux_ch_tbl[2].gpio.port = GPIOB;
-	drv_mux_tbl[2].drv_mux_ch_tbl[2].gpio.pin  = GPIO_PIN_13;
-	drv_mux_tbl[2].drv_mux_ch_tbl[3].gpio.port = GPIOB;
-	drv_mux_tbl[2].drv_mux_ch_tbl[3].gpio.pin  = GPIO_PIN_14;
-   */
-
   drv_mux_tbl[0].drv_mux_ch_tbl[0].gpio.port = GPIOD;
 	drv_mux_tbl[0].drv_mux_ch_tbl[0].gpio.pin  = GPIO_PIN_3;
 	drv_mux_tbl[0].drv_mux_ch_tbl[1].gpio.port = GPIOD;
