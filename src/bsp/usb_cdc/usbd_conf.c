@@ -82,11 +82,11 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef *hpcd)
     GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	/* Configure VBUS Pin */
-    GPIO_InitStruct.Pin = GPIO_PIN_9;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+//	/* Configure VBUS Pin */
+//    GPIO_InitStruct.Pin = GPIO_PIN_9;
+//    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+//    GPIO_InitStruct.Pull = GPIO_NOPULL;
+//    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 
     /* Enable USB FS Clocks */
