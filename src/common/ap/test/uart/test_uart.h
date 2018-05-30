@@ -9,13 +9,18 @@
 #define TEST_UART_H_
 
 
-
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 
 
 void testUartMain(void);
 
 
+#ifdef __cplusplus
+ }
+#endif
 
 
 #endif

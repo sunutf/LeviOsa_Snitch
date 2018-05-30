@@ -57,7 +57,7 @@ void hwInit(void)
 
   uartInit();
 //  logInit();
-//  eepromInit();
+  eepromInit();
 //  flashInit();
 //  resetInit();
   i2cInit();

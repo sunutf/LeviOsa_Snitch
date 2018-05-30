@@ -9,6 +9,11 @@
 #define SRC_COMMON_AP_TEST_TCA9548A_TEST_TCA9548A_H_
 
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
+
 void testMuxMain0(uint8_t gain);
 void testMuxMain1(uint8_t gain);
 void testMuxMain2(uint8_t gain);
@@ -19,6 +24,9 @@ void testRangeAdcI2CMuxMain(uint8_t gain);
 void testAdcI2cMuxConvDist(uint8_t gain);
 
 
+#ifdef __cplusplus
+ }
+#endif
 
 
 

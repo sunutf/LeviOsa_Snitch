@@ -23,6 +23,7 @@
 #include "led.h"
 #include "timer.h"
 #include "uart.h"
+#include "eeprom.h"
 
 #include "wdg.h"
 #include "i2c.h"

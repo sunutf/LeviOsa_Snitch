@@ -53,6 +53,7 @@
 #define _USE_HW_TCS34725
 #define _USE_HW_TCA9548A
 #define _USE_HW_MUX
+#define _USE_HW_EEPROM
 //
 //
 #define _USE_HW_CMDIF_LED
