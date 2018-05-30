@@ -67,6 +67,7 @@
 #define _USE_HW_CMDIF_TCA9548A
 #define _USE_HW_CMDIF_LEVIOSA
 #define _USE_HW_CMDIF_MUX
+#define _USE_HW_CMDIF_CODRONE
 
 
 #define _HW_DEF_BUZZER_TIMER                  _DEF_TIMER1

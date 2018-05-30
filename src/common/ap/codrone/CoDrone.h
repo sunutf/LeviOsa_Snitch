@@ -1166,4 +1166,9 @@ extern CoDroneClass CoDrone;
 #endif
 
 
+void codroneInit(void);
+
+
+
+
 #endif /* SRC_COMMON_AP_CODRONE_CODRONE_H_ */

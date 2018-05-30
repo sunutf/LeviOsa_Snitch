@@ -5,7 +5,7 @@
 */
 
 #include <codrone/CoDrone.h>
-
+#include <codrone/test_codrone.h>
 
 /***************************************************************************/
  
@@ -3927,4 +3927,75 @@ void CoDroneClass::spiral()
 }
 ////////////////////////////////////////////////////
 
-CoDroneClass CoDrone;                         
+CoDroneClass CoDrone;
+
+#ifdef _USE_HW_CMDIF_CODRONE
+void codroneCmdifInit(void);
+int  codroneCmdif(int argc, char **argv);
+#endif
+
+
+void codroneInit(void)
+{
+	#ifdef _USE_HW_CMDIF_CODRONE
+		codroneCmdifInit();
+	#endif
+}
+
+#ifdef _USE_HW_CMDIF_CODRONE
+void codroneCmdifInit(void)
+{
+  cmdifAdd("codrone", codroneCmdif);
+}
+
+int codroneCmdif(int argc, char **argv)
+{
+  bool ret = true;
+  int value = 0;
+
+  //recommanded value :100
+  value = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
+
+  if(argc == 3 && strcmp("start", argv[1]) == 0)
+  {
+  	codroneFlightStart();
+  }
+
+  else if(argc == 3 && strcmp("s", argv[1]) == 0)
+	{
+  	codroneFlightStop();
+ 	}
+
+  else if(argc == 3 && strcmp("r", argv[1]) == 0)
+  {
+  	codroneRollUp(value);
+  }
+
+  else if(argc == 3 && strcmp("p", argv[1]) == 0)
+  {
+  	codronePitchUp(value);
+  }
+
+  else if(argc == 3 && strcmp("y", argv[1]) == 0)
+  {
+  	codronePitchUp(value);
+  }
+
+  else if(argc == 3 && strcmp("t", argv[1]) == 0)
+	{
+  	codroneThrottleUp(value);
+	}
+
+  else
+	{
+  	ret = false;
+	}
+
+  if (ret == false)
+  {
+    cmdifPrintf( "wrong command\n choose : codrone [r/p/t/y] [value]");
+  }
+
+  return 0;
+}
+#endif
