@@ -13,7 +13,6 @@
 #include "hw.h"
 #include "ap_def.h"
 #include "test.h"
-#include "codrone/CoDrone.h"
 
 
 #include "qbuffer.h"

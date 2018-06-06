@@ -60,8 +60,6 @@ void apInit(void)
   p_ap->power.voltage = 0;
   p_ap->power.voltage_warning_ref = 1000; // 11.00V
 
-  codroneInit();
-
 }
 
 void apMain(void)
