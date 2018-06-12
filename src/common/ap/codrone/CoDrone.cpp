@@ -998,17 +998,17 @@ void CoDroneClass::AutoConnect(uint8_t mode)
 	  		 if((discoverFlag == 3) && (connectFlag == 0)) //Address find
 	  		 {	  		
 
-	  		 	LED_Standard();
+						LED_Standard();
 
-	  		 	PreviousMillis = millis();
-	  		 	while(!TimeCheck(1000))			
-	  			{  
-	  		  	   Receive();  
-	  		  	}
+						PreviousMillis = millis();
+						while(!TimeCheck(1000))
+						{
+							 Receive();
+						}
 
-	  		  	delay(50);
-	  		 	discoverFlag = 0;
-	  		 	Send_ConnectNearbyDrone();  	  		 				//  Connect Start
+						delay(50);
+						discoverFlag = 0;
+						Send_ConnectNearbyDrone();  	  		 				//  Connect Start
 	  		 }
 	  		 
 	  		 //be commented
@@ -3993,7 +3993,7 @@ int codroneCmdif(int argc, char **argv)
 
   if (ret == false)
   {
-    cmdifPrintf( "wrong command\n choose : codrone [r/p/t/y] [value]");
+    cmdifPrintf( "wrong command\n choose : codrone [start/s(stop)/r/p/t/y] [value]");
   }
 
   return 0;

@@ -50,7 +50,7 @@ uint16_t EE_WriteVariable(uint16_t VirtAddress, uint16_t Data);
 #define VOLTAGE_RANGE           (uint8_t)VOLTAGE_RANGE_3
 
 /* EEPROM start address in Flash */
-#define EEPROM_START_ADDRESS  ((uint32_t)0x08008000) /* EEPROM emulation start address:
+#define EEPROM_START_ADDRESS  ((uint32_t)0x080E0000) /* EEPROM emulation start address:
                                                   from sector2 : after 16KByte of used
                                                   Flash memory */
 

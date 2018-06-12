@@ -57,17 +57,12 @@ bool drvLedInit(void)
   uint32_t i;
   GPIO_InitTypeDef  GPIO_InitStruct;
 
-  drv_led_tbl[0].gpio.port = GPIOD;
-  drv_led_tbl[0].gpio.pin  = GPIO_PIN_12;    // G
-  drv_led_tbl[1].gpio.port = GPIOD;
-  drv_led_tbl[1].gpio.pin  = GPIO_PIN_13;    // O
-  drv_led_tbl[2].gpio.port = GPIOD;
-  drv_led_tbl[2].gpio.pin  = GPIO_PIN_14;   //  R
-  drv_led_tbl[3].gpio.port = GPIOD;
-  drv_led_tbl[3].gpio.pin  = GPIO_PIN_15;   //  B
-
-
-
+  drv_led_tbl[0].gpio.port = GPIOC;
+  drv_led_tbl[0].gpio.pin  = GPIO_PIN_0;    // G
+  drv_led_tbl[1].gpio.port = GPIOC;
+  drv_led_tbl[1].gpio.pin  = GPIO_PIN_1;    // O
+  drv_led_tbl[2].gpio.port = GPIOC;
+  drv_led_tbl[2].gpio.pin  = GPIO_PIN_2;   //  R
 
   for (i=0; i<_HW_DEF_LED_CH_MAX; i++)
   {

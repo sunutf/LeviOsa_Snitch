@@ -26,8 +26,8 @@
 
 ///Snitch V2///
 #define DEBUG_SERIAL  _DEF_UART1
-#define DRONE_SERIAL  _DEF_UART2
-#define BT_SERIAL     _DEF_UART3
+#define DRONE_SERIAL  _DEF_UART3
+#define BT_SERIAL     _DEF_UART2
 /***********************************************************************/
 
 # define JOY_UP_LIMIT          1023 - 100

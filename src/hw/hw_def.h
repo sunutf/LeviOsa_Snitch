@@ -67,6 +67,7 @@
 #define _USE_HW_CMDIF_TCA9548A
 #define _USE_HW_CMDIF_LEVIOSA
 #define _USE_HW_CMDIF_MUX
+#define _USE_HW_FLASH
 #define _USE_HW_CMDIF_CODRONE
 
 
@@ -77,7 +78,7 @@
 
 
 #define _HW_DEF_CMDIF_LIST_MAX                32
-#define _HW_DEF_LED_CH_MAX                    4
+#define _HW_DEF_LED_CH_MAX                    3
 #define _HW_DEF_BUTTON_CH_MAX                 2
 #define _HW_DEF_UART_CH_MAX                   3
 #define _HW_DEF_TIMER_CH_MAX                  3

@@ -50,15 +50,16 @@ void hwInit(void)
   microsInit();
 
   ledInit();
- // buttonInit();
+//  buttonInit();
   muxInit();
 
   bspInitUSB();
 
   uartInit();
 //  logInit();
+//  delay(50);
   eepromInit();
-//  flashInit();
+  flashInit();
 //  resetInit();
   i2cInit();
   tcs34725Init();

@@ -24,7 +24,7 @@ void codronePitchUp(int value)
 	if (PAIRING != true) codroneBegin();
 
 	// PAIRING is set to true in AutoConnect if they connect together
-	else  // Check to see that we are paired before trying to fly
+	if (PAIRING == true) // Check to see that we are paired before trying to fly
 	{
 		PITCH = value;                         // set PITCH to 100 (tilt forward)
 		CoDrone.Control();                   // send the pitch values to the drone
@@ -36,7 +36,7 @@ void codroneRollUp(int value)
 	if (PAIRING != true) codroneBegin();
 
 	// PAIRING is set to true in AutoConnect if they connect together
-	else  // Check to see that we are paired before trying to fly
+	if (PAIRING == true) // Check to see that we are paired before trying to fly
 	{
 		ROLL = value;                          // set ROLL to 100 (tilt right)
 		CoDrone.Control();                   // send the roll values to the drone
@@ -48,7 +48,7 @@ void codroneYawUp(int value)
 	if (PAIRING != true) codroneBegin();
 
 	// PAIRING is set to true in AutoConnect if they connect together
-	else  // Check to see that we are paired before trying to fly
+	if (PAIRING == true) // Check to see that we are paired before trying to fly
 	{
 		YAW = value;                           // set YAW to 100 (turn right)
 		CoDrone.Control();                   // send the yaw values to the drone
@@ -60,7 +60,7 @@ void codroneThrottleUp(int value)
 	if (PAIRING != true) codroneBegin();
 
 	// PAIRING is set to true in AutoConnect if they connect together
-	else  // Check to see that we are paired before trying to fly
+	if (PAIRING == true) // Check to see that we are paired before trying to fly
 	{
 		THROTTLE  = value;                     // set THROTTLE to 100 (full),
 		// note that we do not need to call TakeOff since we are starting the throttle ourselves,
@@ -72,12 +72,24 @@ void codroneThrottleUp(int value)
 
 void codroneFlightStart(void)
 {
-	CoDrone.FlightEvent(TakeOff);        // have the drone take off
+	if (PAIRING != true) codroneBegin();
 
-	delay(2000);                         // fly for 2 seconds (2000 milliseconds)
+	if (PAIRING == true) // Check to see that we are paired before trying to fly
+	{
+		CoDrone.FlightEvent(TakeOff);        // have the drone take off
+
+		delay(2000);                         // fly for 2 seconds (2000 milliseconds)
+	}
 }
 
 void codroneFlightStop(void)
 {
-	CoDrone.FlightEvent(Stop);              // turn off the motors
+	if (PAIRING != true) codroneBegin();
+
+	if (PAIRING == true) // Check to see that we are paired before trying to fly
+	{
+		CoDrone.FlightEvent(Landing);        // have the drone take off
+
+		delay(2000);                         // fly for 2 seconds (2000 milliseconds)
+	}
 }
