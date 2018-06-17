@@ -39,7 +39,6 @@ static uint8_t    i2c_ch = 0;
 static uint8_t    id     = 0;
 static uint8_t    ch     = 0;
 
-
 void leviosa_boardInit(void)
 {
 	#ifdef _USE_HW_CMDIF_LEVIOSA
@@ -139,6 +138,35 @@ void leviosa_boardConvDistance(void)
 	}
 }
 
+void leviosa_boardCalcCoord(void)
+{
+	float largest_value[3];
+	uint8_t largest_index[3];
+
+	// DR: Below is horribly ugly.
+	//     Is there any constraint because of embedded system?
+	largest_value[0] = largest_value[1] = largest_value[2] = 0;
+	for(uint8_t i = 0; i < 3; i++)
+	{
+		float max = 0;
+		uint8_t index = 0;
+		for(ch = 0; ch < (NUM_SENSOR/3); ch++)
+		{
+			float cur_source = source_lux[ch];
+			if(max < cur_source && cur_source != largest_value[0] && cur_source != largest_value[1] && cur_source != largest_value[2])
+			{
+				max = cur_source;
+				index = ch;
+			}
+		}
+		largest_value[i] = max;
+		largest_index[i] = index;
+#if 1
+		cmdifPrintf("%d: %f %d\n", i, largest_value[i], largest_index[i]);
+#endif
+	}
+}
+
 uint32_t* leviosa_boardGetDistance(void)
 {
 	return distance_lux;
@@ -159,6 +187,7 @@ void leviosa_boardLuxTest(uint8_t output)
 		leviosa_boardGetCmd();
 		leviosa_boardCalcSource();
 		leviosa_boardConvDistance();
+		leviosa_boardCalcCoord();
 
 		output_lux = leviosa_boardGetDistance();
 		t_micros = micros() - t_micros;
@@ -175,7 +204,14 @@ void leviosa_boardLuxTest(uint8_t output)
 		{
 			for(ch = 0; ch < (NUM_SENSOR/3); ch++)
 			{
-				cmdifPrintf(" distance : %d mm/ ", output_lux[ch]);
+				cmdifPrintf("distance : %d mm/ ", output_lux[ch]);
+			}
+		}
+		else if(output == 3)
+		{
+			for(ch = 0; ch < (NUM_SENSOR/3); ch++)
+			{
+				cmdifPrintf("src : %04.04f, ", source_lux[ch]);
 			}
 		}
 		///////////////////////////////////////
@@ -195,27 +231,25 @@ int leviosaCmdif(int argc, char **argv)
 {
   bool ret = true;
 
-
   if(argc == 2 && strcmp("source", argv[1]) == 0)
   {
   	leviosa_boardLuxTest(1);
   }
-
-
   else if(argc == 2 && strcmp("distance", argv[1]) == 0)
   {
   	leviosa_boardLuxTest(2);
   }
-
   else if(argc == 2 && strcmp("ap", argv[1]) == 0)
   {
   	leviosa_boardLuxTest(2);
+  } else if(argc == 2 && strcmp("coord", argv[1]) == 0)
+  {
+	leviosa_boardLuxTest(3);
   }
-
   else
-	{
+  {
   	ret = false;
-	}
+  }
 
   if (ret == false)
   {
