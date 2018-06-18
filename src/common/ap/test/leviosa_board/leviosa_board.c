@@ -9,6 +9,7 @@
 
 #include "hw.h"
 #include "leviosa_board.h"
+#include "matrix.h"
 #include "tca9548a.h"
 #include "range_lux/range_lux.h"
 #include "lkup_tbl/lkup_tbl.h"
