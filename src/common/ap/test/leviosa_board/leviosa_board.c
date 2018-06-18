@@ -135,7 +135,7 @@ void leviosa_boardConvDistance(void)
 
 	for(i=0; i<((NUM_SENSOR-1)/3)+1;i++)
 	{
-		distance_lux[ch] = lkup_tblGetDist(source_lux[ch]);
+		distance_lux[i] = lkup_tblGetDist(source_lux[i]);
 	}
 }
 
@@ -166,6 +166,23 @@ void leviosa_boardCalcCoord(void)
 		cmdifPrintf("%d: %f %d\n", i, largest_value[i], largest_index[i]);
 #endif
 	}
+
+	float mat_A[3][3];
+	float vec_B[3];
+	for (uint8_t i = 0; i < 3; i++){
+		mat_A[0][i] = ETA[largest_index[0]][i];
+		mat_A[1][i] = ETA[largest_index[1]][i];
+		mat_A[2][i] = ETA[largest_index[2]][i];
+	}
+
+	vec_B[0] = norm(ETA[largest_index[0]]) * distance_lux[largest_index[0]] + innerProduct(ETA[largest_index[0]], S[largest_index[0]]);
+	vec_B[1] = norm(ETA[largest_index[1]]) * distance_lux[largest_index[1]] + innerProduct(ETA[largest_index[1]], S[largest_index[1]]);
+	vec_B[2] = norm(ETA[largest_index[2]]) * distance_lux[largest_index[2]] + innerProduct(ETA[largest_index[2]], S[largest_index[2]]);
+
+	float res[3];
+	float inv_mat_A[3][3];
+	matrixInverse(mat_A, &inv_mat_A);
+	matrixMul(inv_mat_A, vec_B, &res);
 }
 
 uint32_t* leviosa_boardGetDistance(void)
