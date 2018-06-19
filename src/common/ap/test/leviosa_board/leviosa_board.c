@@ -27,6 +27,7 @@ int  leviosaCmdif(int argc, char **argv);
 
 #define ALL_CH   8
 
+float        coordinate[3];
 float   	 source_lux[((NUM_SENSOR-1)/3)+1];
 float  		 nature_lux[((NUM_SENSOR-1)/3)+1];
 uint32_t   distance_lux[((NUM_SENSOR-1)/3)+1];
@@ -162,10 +163,17 @@ void leviosa_boardCalcCoord(void)
 		}
 		largest_value[i] = max;
 		largest_index[i] = index;
-#if 1
-		cmdifPrintf("%d: %f %d\n", i, largest_value[i], largest_index[i]);
-#endif
 	}
+
+#if 0
+	// To debug. Suppose the light comes to the sensor 2, 4, 6
+	largest_index[0] = 1;
+	largest_index[1] = 3;
+	largest_index[2] = 5;
+	for (uint8_t i = 0; i < 3; i++) {
+		cmdifPrintf("%d: %f %d\n", i, largest_value[i], largest_index[i]+1);
+	}
+#endif
 
 	float mat_A[3][3];
 	float vec_B[3];
@@ -179,10 +187,9 @@ void leviosa_boardCalcCoord(void)
 	vec_B[1] = norm(ETA[largest_index[1]]) * distance_lux[largest_index[1]] + innerProduct(ETA[largest_index[1]], S[largest_index[1]]);
 	vec_B[2] = norm(ETA[largest_index[2]]) * distance_lux[largest_index[2]] + innerProduct(ETA[largest_index[2]], S[largest_index[2]]);
 
-	float res[3];
 	float inv_mat_A[3][3];
 	matrixInverse(mat_A, &inv_mat_A);
-	matrixMul(inv_mat_A, vec_B, &res);
+	matrixMul(inv_mat_A, vec_B, &coordinate);
 }
 
 uint32_t* leviosa_boardGetDistance(void)
@@ -209,7 +216,7 @@ void leviosa_boardLuxTest(uint8_t output)
 
 		output_lux = leviosa_boardGetDistance();
 		t_micros = micros() - t_micros;
-		cmdifPrintf("Time : %d  ", t_micros);
+		cmdifPrintf("Time : %d  \n", t_micros);
 
 		if(output == 1)
 		{
@@ -222,14 +229,19 @@ void leviosa_boardLuxTest(uint8_t output)
 		{
 			for(ch = 0; ch < (NUM_SENSOR/3); ch++)
 			{
-				cmdifPrintf("distance : %d mm/ ", output_lux[ch]);
+				cmdifPrintf("%d: %d mm\n", ch+1, output_lux[ch]);
 			}
 		}
 		else if(output == 3)
 		{
+			// DR: why ch is a global variable?
 			for(ch = 0; ch < (NUM_SENSOR/3); ch++)
 			{
-				cmdifPrintf("src : %04.04f, ", source_lux[ch]);
+				cmdifPrintf("%d: %d mm\n", ch+1, output_lux[ch]);
+			}
+			for(uint8_t i = 0; i < 3; i++)
+			{
+				cmdifPrintf("%c : %04.04f, ", XYZ[i], coordinate[i]);
 			}
 		}
 		///////////////////////////////////////

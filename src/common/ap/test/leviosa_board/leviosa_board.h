@@ -26,9 +26,7 @@
  uint32_t* leviosa_boardGetDistance(void);
  void leviosa_boardLuxTest(uint8_t output);
 
-#define X 0
-#define Y 1
-#define Z 2
+char XYZ[] = {'X', 'Y', 'Z'};
 
  /*
  S=
