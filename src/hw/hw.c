@@ -60,6 +60,7 @@ void hwInit(void)
 //  delay(50);
   eepromInit();
   flashInit();
+
 //  resetInit();
   i2cInit();
   tcs34725Init();

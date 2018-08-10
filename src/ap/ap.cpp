@@ -49,18 +49,16 @@ ap_t *p_ap = &ap_control;
 
 void apInit(void)
 {
-  p_ap->err_code = OK;
-
-
-  p_ap->counter.down_1ms  = 0;
-  p_ap->counter.down_128ms= 0;
-
-  p_ap->power.valid   = false;
-  p_ap->power.update  = false;
-  p_ap->power.voltage = 0;
-  p_ap->power.voltage_warning_ref = 1000; // 11.00V
-
-  codroneInit();
+//  p_ap->err_code = OK;
+//
+//
+//  p_ap->counter.down_1ms  = 0;
+//  p_ap->counter.down_128ms= 0;
+//
+//  p_ap->power.valid   = false;
+//  p_ap->power.update  = false;
+//  p_ap->power.voltage = 0;
+//  p_ap->power.voltage_warning_ref = 1000; // 11.00V
 
 }
 
