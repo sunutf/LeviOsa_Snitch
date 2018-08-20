@@ -13,6 +13,7 @@
 #include "hw.h"
 #include "ap_def.h"
 #include "test.h"
+#include "cmd_tello/cmd_tello.h"
 
 
 #include "qbuffer.h"

@@ -69,6 +69,7 @@
 #define _USE_HW_CMDIF_MUX
 #define _USE_HW_FLASH
 #define _USE_HW_CMDIF_CODRONE
+#define _USE_HW_CMDIF_TELLO
 
 
 #define _HW_DEF_BUZZER_TIMER                  _DEF_TIMER1

@@ -98,31 +98,31 @@
 #define _DEF_RESET_WDG      2
 #define _DEF_RESET_SOFT     3
 
-
-#define _DEF_DXL_BAUD_9600      0
-#define _DEF_DXL_BAUD_57600     1
-#define _DEF_DXL_BAUD_115200    2
-#define _DEF_DXL_BAUD_1000000   3
-#define _DEF_DXL_BAUD_2000000   4
-#define _DEF_DXL_BAUD_3000000   5
-#define _DEF_DXL_BAUD_4000000   6
-#define _DEF_DXL_BAUD_4500000   7
-
-
-#define _DEF_DXL_AX             0
-#define _DEF_DXL_RX             1
-#define _DEF_DXL_MX             2
-#define _DEF_DXL_XL             3
-
-
-
-#define _DEF_DXL_MODEL_AX12A        12
-#define _DEF_DXL_MODEL_AX18A        18
-#define _DEF_DXL_MODEL_AX12W        300
-#define _DEF_DXL_MODEL_XL430        1060
-#define _DEF_DXL_MODEL_XM430_W210   1030
-#define _DEF_DXL_MODEL_XM430_W350   1020
-#define _DEF_DXL_MODEL_2XL430       1090
+//
+//#define _DEF_DXL_BAUD_9600      0
+//#define _DEF_DXL_BAUD_57600     1
+//#define _DEF_DXL_BAUD_115200    2
+//#define _DEF_DXL_BAUD_1000000   3
+//#define _DEF_DXL_BAUD_2000000   4
+//#define _DEF_DXL_BAUD_3000000   5
+//#define _DEF_DXL_BAUD_4000000   6
+//#define _DEF_DXL_BAUD_4500000   7
+//
+//
+//#define _DEF_DXL_AX             0
+//#define _DEF_DXL_RX             1
+//#define _DEF_DXL_MX             2
+//#define _DEF_DXL_XL             3
+//
+//
+//
+//#define _DEF_DXL_MODEL_AX12A        12
+//#define _DEF_DXL_MODEL_AX18A        18
+//#define _DEF_DXL_MODEL_AX12W        300
+//#define _DEF_DXL_MODEL_XL430        1060
+//#define _DEF_DXL_MODEL_XM430_W210   1030
+//#define _DEF_DXL_MODEL_XM430_W350   1020
+//#define _DEF_DXL_MODEL_2XL430       1090
 
 
 
