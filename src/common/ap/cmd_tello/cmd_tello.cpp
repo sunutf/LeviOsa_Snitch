@@ -6,9 +6,10 @@
  */
 
 #include <string>
-#include "cmd_tello/cmd_tello.h"
+#include "cmd_tello\cmd_tello.h"
 #include "hw.h"
 #include "hw_def.h"
+#include "leviosa_board\leviosa_board.h"
 
 using namespace std;
 
@@ -83,10 +84,63 @@ void cmdTelloSend(cmd_tello_type command, int cmd_value)
   }
 }
 
+
+//[front, left1, left2, back, right 2, right 1]
+void telloLeviosaCmdTest(uint8_t output)
+{
+	uint32_t   t_micros;
+	uint32_t*   output_lux;
+
+	leviosa_boardReady();
+	leviosa_boardSetCmd();
+
+	while(cmdifRxAvailable() == 0)
+	{
+		t_micros = micros();
+
+		leviosa_boardGetCmd();
+		leviosa_boardCalcSource();
+		leviosa_boardConvDistance();
+		leviosa_boardCalcCoord();
+
+		output_lux = leviosa_boardGetDistance();
+		t_micros = micros() - t_micros;
+		cmdifPrintf("Time : %d  \n", t_micros);
+
+		if(output == 1)
+		{
+			for(int ch = 0; ch < (18/3); ch++)
+			{
+				cmdifPrintf("%d: %d mm\n", ch+1, output_lux[ch]);
+			}
+		}
+
+		//1. takeoff (condition : )
+		//2. land (condition : no signal detect during 10s) << already done by esp32
+		//3. front/ back (condition : target distance - measuring distance < 50mm stable)
+		//4. cw/ ccw(condition : left > target (ccw), right (cw))
+
+
+
+
+		///////////////////////////////////////
+		cmdifPrintf("\n");
+		cmdifPrintf("\n");
+
+
+	}
+
+}
+
+
+
+
 #ifdef _USE_HW_CMDIF_TELLO
 void telloCmdifInit(void);
 int  telloCmdif(int argc, char **argv);
 #endif
+
+
 
 void telloInit(void)
 {
@@ -167,6 +221,11 @@ int telloCmdif(int argc, char **argv)
 	else if(argc == 3 && strcmp("speed", argv[1]) == 0)
 	{
 		cmdTelloSend(SPEED, value);
+	}
+
+	else if(argc == 3 && strcmp("test", argv[1]) == 0)
+	{
+		telloLeviosaCmdTest(, value);
 	}
 
 	else

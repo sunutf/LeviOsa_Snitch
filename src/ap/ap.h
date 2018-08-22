@@ -14,6 +14,7 @@
 #include "ap_def.h"
 #include "test.h"
 #include "cmd_tello/cmd_tello.h"
+#include "leviosa_board/leviosa_board.h"
 
 
 #include "qbuffer.h"
