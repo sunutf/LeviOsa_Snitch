@@ -225,7 +225,7 @@ int telloCmdif(int argc, char **argv)
 
 	else if(argc == 3 && strcmp("test", argv[1]) == 0)
 	{
-		telloLeviosaCmdTest(, value);
+		telloLeviosaCmdTest(value);
 	}
 
 	else
