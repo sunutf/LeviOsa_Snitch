@@ -143,7 +143,10 @@ void telloLeviosaCmdTest(uint8_t output)
 		//standby
 		if(!flying)
 		{
+			ledOn(0);
 			uartPrintf(TELLO_SERIAL, "land,");
+			cmdifPrintf("standby takeoff signal\n");
+
 			if(source_lux[max_index] > START_COND)
 			{
 				if(!standby)
@@ -156,6 +159,8 @@ void telloLeviosaCmdTest(uint8_t output)
 					if((millis() - t_millis) > 3000)
 					{
 						uartPrintf(TELLO_SERIAL, "takeoff,");
+						cmdifPrintf("send flying\n");
+
 						flying = true;
 						standby = false;
 					}
@@ -164,6 +169,7 @@ void telloLeviosaCmdTest(uint8_t output)
 			else
 			{
 				standby = false;
+				cmdifPrintf("standby again\n");
 			}
 		}
 
@@ -171,8 +177,12 @@ void telloLeviosaCmdTest(uint8_t output)
 		else
 		{
 			//land condition
+			ledOff(0);
+			ledOn(1);
+			cmdifPrintf("flying\n");
 			if(source_lux[max_index] < START_COND)
 			{
+				cmdifPrintf("standby during flying\n");
 				if(!standby)
 				{
 					t_millis = millis();
@@ -185,6 +195,7 @@ void telloLeviosaCmdTest(uint8_t output)
 						uartPrintf(TELLO_SERIAL, "land,");
 						flying = false;
 						standby = false;
+						cmdifPrintf("landing\n");
 					}
 				}
 			}
@@ -209,12 +220,14 @@ void telloLeviosaCmdTest(uint8_t output)
 				if(diff_dist > TARGET_OFFSET)
 				{
 					uartPrintf(TELLO_SERIAL, "back %d,", value);
+					cmdifPrintf("back : %d\n", value);
 				}
 
 				//go
 				else if(diff_dist < -(TARGET_OFFSET))
 				{
 					uartPrintf(TELLO_SERIAL, "forward %d,", value);
+					cmdifPrintf("go : %d\n", value);
 				}
 
 				//stay
@@ -235,8 +248,10 @@ void telloLeviosaCmdTest(uint8_t output)
 					for(uint8_t cnt=0; cnt < (NUM_SEN_PART-max_index); cnt++)
 					{
 						uartPrintf(TELLO_SERIAL, "cw %d,", value);
+						cmdifPrintf("cw : %d\n", value);
 						delay(500);
 					}
+
 				}
 
 				//ccw
@@ -245,6 +260,7 @@ void telloLeviosaCmdTest(uint8_t output)
 					for(uint8_t cnt=0; cnt < max_index; cnt++)
 					{
 						uartPrintf(TELLO_SERIAL, "ccw %d,", value);
+						cmdifPrintf("ccw : %d\n", value);
 						delay(500);
 					}
 				}
