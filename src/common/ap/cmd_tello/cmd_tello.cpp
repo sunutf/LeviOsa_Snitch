@@ -11,7 +11,7 @@
 #include "hw_def.h"
 #include "leviosa_board\leviosa_board.h"
 
-#define START_COND 150
+#define START_COND 100
 #define TARGET_DIST 700
 #define TARGET_OFFSET 50
 #define NUM_SEN_PART 6
@@ -134,6 +134,8 @@ void telloLeviosaCmdTest(uint8_t output)
 
 
 		max_index = findMinIndex(distance_lux); //MAX_LUX
+		cmdifPrintf("1st : %d\n", max_index);
+
 
 		//1. takeoff (condition : )
 		//2. land (condition : no signal detect during 10s) << already done by esp32
@@ -144,6 +146,7 @@ void telloLeviosaCmdTest(uint8_t output)
 		if(!flying)
 		{
 			ledOn(0);
+			uartPrintf(TELLO_SERIAL, "command,");
 			uartPrintf(TELLO_SERIAL, "land,");
 			cmdifPrintf("standby takeoff signal\n");
 
@@ -179,6 +182,8 @@ void telloLeviosaCmdTest(uint8_t output)
 			//land condition
 			ledOff(0);
 			ledOn(1);
+
+			uartPrintf(TELLO_SERIAL, "command,");
 			cmdifPrintf("flying\n");
 			if(source_lux[max_index] < START_COND)
 			{
@@ -196,76 +201,79 @@ void telloLeviosaCmdTest(uint8_t output)
 						flying = false;
 						standby = false;
 						cmdifPrintf("landing\n");
+						ledOff(1);
+						ledOn(0);
 					}
 				}
 			}
 			else
 			{
 				standby = false;
-			}
 
-			//go/back
-			if(0 == max_index)
-			{
-				int diff_dist = (int)TARGET_DIST - (int)distance_lux[max_index];
-
-				value = 20;
-				//FASTER
-				if(abs(diff_dist) > 200)
+				//go/back
+				if(0 == max_index)
 				{
-					value = 40;
-				}
+					int diff_dist = (int)TARGET_DIST - (int)distance_lux[max_index];
 
-				//back
-				if(diff_dist > TARGET_OFFSET)
-				{
-					uartPrintf(TELLO_SERIAL, "back %d,", value);
-					cmdifPrintf("back : %d\n", value);
-				}
-
-				//go
-				else if(diff_dist < -(TARGET_OFFSET))
-				{
-					uartPrintf(TELLO_SERIAL, "forward %d,", value);
-					cmdifPrintf("go : %d\n", value);
-				}
-
-				//stay
-				else
-				{
-
-				}
-			}
-
-			//ccw/cw
-			else
-			{
-				value = 60;
-
-				//cw
-				if(max_index >= 3)
-				{
-					for(uint8_t cnt=0; cnt < (NUM_SEN_PART-max_index); cnt++)
+					value = 20;
+					//FASTER
+					if(abs(diff_dist) > 200)
 					{
-						uartPrintf(TELLO_SERIAL, "cw %d,", value);
-						cmdifPrintf("cw : %d\n", value);
-						delay(500);
+						value = 40;
 					}
 
+					cmdifPrintf("diff_dist : %d\n", diff_dist);
+					//back
+					if(diff_dist > TARGET_OFFSET)
+					{
+						uartPrintf(TELLO_SERIAL, "back %d,", value);
+						cmdifPrintf("back : %d\n", value);
+					}
+
+					//go
+					else if(diff_dist < -(TARGET_OFFSET))
+					{
+						uartPrintf(TELLO_SERIAL, "forward %d,", value);
+						cmdifPrintf("go : %d \n ", value);
+
+					}
+
+					//stay
+					else
+					{
+
+					}
 				}
 
-				//ccw
+				//ccw/cw
 				else
 				{
-					for(uint8_t cnt=0; cnt < max_index; cnt++)
+					value = 60;
+
+					//cw
+					if(max_index >= 3)
 					{
-						uartPrintf(TELLO_SERIAL, "ccw %d,", value);
-						cmdifPrintf("ccw : %d\n", value);
-						delay(500);
+						for(uint8_t cnt=0; cnt < (NUM_SEN_PART-max_index); cnt++)
+						{
+							uartPrintf(TELLO_SERIAL, "cw %d,", value);
+							cmdifPrintf("cw : %d\n", value);
+//							delay(100);
+						}
+
+					}
+
+					//ccw
+					else
+					{
+						for(uint8_t cnt=0; cnt < max_index; cnt++)
+						{
+							uartPrintf(TELLO_SERIAL, "ccw %d,", value);
+							cmdifPrintf("ccw : %d\n", value);
+//							delay(500);
+						}
 					}
 				}
 			}
-
 		}
 
 

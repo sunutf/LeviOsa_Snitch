@@ -12,6 +12,8 @@
 #include "math.h"
 #include "range_lux.h"
 
+#define TELLO_VER
+
 
 void rangeLuxCalculate(uint16_t *buf, float *source, float *nature)
 {
@@ -21,9 +23,16 @@ void rangeLuxCalculate(uint16_t *buf, float *source, float *nature)
 	float source_lux;
 	float nature_lux;
 
-	diff_luxA = buf[0]-buf[1];
-	diff_luxB = buf[1]-buf[2];
-	diff_luxC = buf[2]-buf[0];
+	#ifdef TELLO_VER
+		diff_luxA = buf[0]-buf[2];
+		diff_luxB = buf[2]-buf[1];
+		diff_luxC = buf[1]-buf[0];
+
+	#else
+		diff_luxA = buf[0]-buf[1];
+		diff_luxB = buf[1]-buf[2];
+		diff_luxC = buf[2]-buf[0];
+	#endif
 
 	source_lux =   (float)(diff_luxC * diff_luxC);
 	source_lux +=  (float)((diff_luxA-diff_luxB)*(diff_luxA-diff_luxB));
