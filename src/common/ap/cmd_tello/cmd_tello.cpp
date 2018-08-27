@@ -11,7 +11,7 @@
 #include "hw_def.h"
 #include "leviosa_board\leviosa_board.h"
 
-#define START_COND 100
+#define START_COND 70
 #define TARGET_DIST 700
 #define TARGET_OFFSET 50
 #define NUM_SEN_PART 6
