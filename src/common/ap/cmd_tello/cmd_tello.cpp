@@ -124,7 +124,7 @@ void telloLeviosaCmdTest(uint8_t output)
 		t_micros = micros() - t_micros;
 		cmdifPrintf("Time : %d  \n", t_micros);
 
-		if(output == 1)
+		if(output == 2)
 		{
 			for(int ch = 0; ch < NUM_SEN_PART; ch++)
 			{
@@ -161,7 +161,8 @@ void telloLeviosaCmdTest(uint8_t output)
 				{
 					if((millis() - t_millis) > 3000)
 					{
-						uartPrintf(TELLO_SERIAL, "takeoff,down %d,",300);
+						uartPrintf(TELLO_SERIAL, "up %d,",300);
+//						uartPrintf(TELLO_SERIAL, "takeoff,down %d,",300);
 						cmdifPrintf("send flying\n");
 
 						flying = true;
