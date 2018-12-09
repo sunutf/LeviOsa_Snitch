@@ -5,20 +5,20 @@
  *      Author: D.ggavy
  */
 
-#include <string>
+//#include <string>
 #include "cmd_tello\cmd_tello.h"
 #include "hw.h"
 #include "hw_def.h"
 #include "leviosa_board\leviosa_board.h"
 
-#define START_COND 70
-#define TARGET_DIST 300
-#define TARGET_OFFSET 50
-#define NUM_SEN_PART 6
+#define START_COND 		70
+#define TARGET_DIST 	300
+#define TARGET_OFFSET 	50
+#define NUM_SEN_PART	6
 
 using namespace std;
 
-bool  standby = false;
+bool	standby = false;
 bool	flying = false;
 
 // 1. UART port open
