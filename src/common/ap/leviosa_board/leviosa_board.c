@@ -63,13 +63,11 @@ void leviosaCmdifInit(void);
 int  leviosaCmdif(int argc, char **argv);
 #endif
 
-#define MAX_CH_PER_MUX 6
-#define NUM_MUX        6
-#define NUM_SENSOR   (NUM_MUX*MAX_CH_PER_MUX)
+static uint8_t    i2c_ch = 0;
+static uint8_t    id     = 0;
+static uint8_t    ch     = 0;
 
-#define ALL_CH   8
-
-float        coordinate[3];
+float      coordinate[3];
 float   	 source_lux[((NUM_SENSOR-1)/3)+1];
 float  		 nature_lux[((NUM_SENSOR-1)/3)+1];
 uint32_t   distance_lux[((NUM_SENSOR-1)/3)+1];
@@ -79,9 +77,7 @@ tcs34725_t tcs34725;
 tcs34725_t tcs34725_list[NUM_SENSOR];
 
 static bool ret = TRUE;
-static uint8_t    i2c_ch = 0;
-static uint8_t    id     = 0;
-static uint8_t    ch     = 0;
+
 
 void leviosa_boardInit(void)
 {
@@ -120,6 +116,8 @@ void leviosa_boardSetCmd(void)
 	}
 }
 
+
+
 void leviosa_boardGetCmd(void)
 {
 	///////////////////////////////////////
@@ -127,7 +125,6 @@ void leviosa_boardGetCmd(void)
 	tcs34725WaitForIntegration(&tcs34725);
 	delay(5);
 	///////////////////////////////////////
-
 
 	///////////////////////////////////////
 	/* READ*/
@@ -293,6 +290,24 @@ void leviosa_boardLuxTest(uint8_t output)
 
 }
 
+//id(surface)>ch(0~3 or 0~2)
+void leviosa_boardCaliTest(uint8_t id)
+{
+
+	leviosa_boardReady();
+	leviosa_boardSetCmd();
+
+	calibrationInit();
+
+	while(cmdifRxAvailable() == 0)
+	{
+		calibrationMain(id);
+
+	}
+
+}
+
+
 #ifdef _USE_HW_CMDIF_LEVIOSA
 void leviosaCmdifInit(void)
 {
@@ -314,9 +329,15 @@ int leviosaCmdif(int argc, char **argv)
   else if(argc == 2 && strcmp("ap", argv[1]) == 0)
   {
   	leviosa_boardLuxTest(2);
-  } else if(argc == 2 && strcmp("coord", argv[1]) == 0)
+  }
+  else if(argc == 2 && strcmp("coord", argv[1]) == 0)
   {
-	leviosa_boardLuxTest(3);
+  	leviosa_boardLuxTest(3);
+  }
+  else if(argc == 3 && strcmp("cali", argv[1]) == 0)
+  {
+  	uint8_t id = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
+  	leviosa_boardCaliTest(id);
   }
   else
   {

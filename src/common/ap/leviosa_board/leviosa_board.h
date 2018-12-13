@@ -27,6 +27,12 @@
  void leviosa_boardLuxTest(uint8_t output);
  void leviosa_boardCalcCoord(void);
 
+#define MAX_CH_PER_MUX 6
+#define NUM_MUX        6
+#define NUM_SENSOR   (NUM_MUX*MAX_CH_PER_MUX)
+
+#define ALL_CH   8
+
 
 
 #ifdef __cplusplus
