@@ -14,6 +14,7 @@
 #include "range_lux/range_lux.h"
 #include "lkup_tbl/lkup_tbl.h"
 
+
 char XYZ[] = {'X', 'Y', 'Z'};
 
  /*
@@ -301,7 +302,11 @@ void leviosa_boardCaliTest(uint8_t id)
 
 	while(cmdifRxAvailable() == 0)
 	{
-		calibrationMain(id);
+		if(!calibrationMain(id))
+		{
+			cmdifPrintf("FAIL CALIBRATION ");
+			break;
+		}
 
 	}
 
@@ -346,7 +351,7 @@ int leviosaCmdif(int argc, char **argv)
 
   if (ret == false)
   {
-    cmdifPrintf( "wrong command\n choose : leviosa [source/distance/ap]");
+    cmdifPrintf( "wrong command\n choose : leviosa [source/distance/ap/coord/cali]");
   }
 
   return 0;

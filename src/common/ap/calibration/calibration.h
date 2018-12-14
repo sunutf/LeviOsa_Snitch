@@ -11,8 +11,15 @@
 #include "test_def.h"
 #include "hw.h"
 
-void calibrationInit(void);
-void calibrationMain(uint8_t);
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
+void calibrationInit(void);
+bool calibrationMain(uint8_t);
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* SRC_COMMON_AP_CALIBRATION_CALIBRATION_H_ */

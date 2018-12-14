@@ -26,6 +26,8 @@
  uint32_t* leviosa_boardGetDistance(void);
  void leviosa_boardLuxTest(uint8_t output);
  void leviosa_boardCalcCoord(void);
+ void leviosa_boardCaliTest(uint8_t);
+
 
 #define MAX_CH_PER_MUX 6
 #define NUM_MUX        6

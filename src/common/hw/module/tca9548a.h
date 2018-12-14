@@ -33,6 +33,8 @@ void tcaDeSelect(uint8_t i2c_ch, uint8_t id);
 err_code_t tcaI2CTransmit(uint8_t ch, uint8_t addr, uint8_t *p_data, uint32_t length, uint32_t timeout);
 
 
-
+#ifdef __cplusplus
+ }
+#endif
 #endif
 #endif /* SRC_CMSDK_HW_MODULE_TCA9548A_H_ */

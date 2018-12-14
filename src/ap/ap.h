@@ -16,6 +16,8 @@
 #include "cmd_tello/cmd_tello.h"
 #include "leviosa_board/leviosa_board.h"
 
+#include "calibration/calibration.h"
+
 
 #include "qbuffer.h"
 
