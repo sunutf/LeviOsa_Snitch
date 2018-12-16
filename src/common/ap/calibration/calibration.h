@@ -17,6 +17,10 @@
 
 void calibrationInit(void);
 bool calibrationMain(uint8_t);
+uint16_t calibrationLuxRead(uint8_t, uint32_t);
+uint16_t calibrationReadEEPROM(uint8_t id, uint8_t ch_in_id);
+
+
 
 #ifdef __cplusplus
  }

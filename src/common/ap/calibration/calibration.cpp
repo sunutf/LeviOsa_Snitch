@@ -32,8 +32,7 @@
 
 
 //0~180
-#define CALI_SERIAL 2
-#define NUM_SENSOR_IN_SURFACE 3
+
 
 uint32_t init_angle  = 0;
 uint32_t final_angle = 0;
@@ -49,7 +48,7 @@ uint32_t rx_cnt			 = 0;
 
 uint8_t i2c_ch = 0;
 
-uint16_t cali_tbl[12][4][180] = {0};
+uint16_t cali_tbl[4][1800] = {0};
 char ack_packet[4] = {'#', 0, 0, '@'};
 
 char command_packet[7];
@@ -62,9 +61,9 @@ bool parse_start	= false;
 
 void calibrationParseInitCommand(char* buf)
 {
-  init_angle 	= (((buf[0]) << 8) | buf[1])/10;
-  final_angle = (((buf[2]) << 8) | buf[3])/10;
-  resolution	= ((buf[4]) << 8) | buf[5];
+  init_angle 	= ((buf[0]) << 8) | buf[1];
+  final_angle 	= ((buf[2]) << 8) | buf[3];
+  resolution	= (buf[4]) << 8 | buf[5];
   iter_rx_cnt	= buf[6];
 
   step = (final_angle - init_angle)/resolution;
@@ -72,7 +71,7 @@ void calibrationParseInitCommand(char* buf)
 
 uint32_t calibrationParseCommand(char* buf)
 {
-  uint32_t angle 	= ((buf[0]) << 8) | buf[1];
+  uint32_t angle = ((buf[0]) << 8) | buf[1];
   return angle;
 }
 
@@ -100,6 +99,7 @@ uint16_t calibrationLuxSingleGet(uint8_t id, uint8_t ch_in_id, uint32_t curr_ang
 void calibrationLuxStore(uint8_t id, uint32_t curr_angle, uint8_t iter_rx_cnt)
 {
 	uint32_t sum[NUM_SENSOR_IN_SURFACE] = {0};
+
 	for(uint8_t i = 0; i<iter_rx_cnt; i++)
 	{
 		for(uint8_t ch_in_id =0; ch_in_id<NUM_SENSOR_IN_SURFACE; ch_in_id++)
@@ -114,13 +114,53 @@ void calibrationLuxStore(uint8_t id, uint32_t curr_angle, uint8_t iter_rx_cnt)
 	{
 		cmdifPrintf("\n id : %d done", ch_in_id);
 
-		cali_tbl[id][ch_in_id][curr_angle] = sum[ch_in_id]/iter_rx_cnt;
-		//eeprom store
-
+		cali_tbl[ch_in_id][curr_angle] = sum[ch_in_id]/iter_rx_cnt;
 	}
 
 	tcaDeSelect(i2c_ch, id);
 }
+
+uint16_t calibrationLuxRead(uint8_t ch_in_id, uint32_t curr_angle)
+{
+	return cali_tbl[ch_in_id][curr_angle];
+}
+
+uint16_t calibrationReadEEPROM(uint8_t id, uint8_t ch_in_id)
+{
+	uint32_t eeprom_index;
+
+	uint8_t low_data;
+	uint8_t high_data;
+
+	eeprom_index = (id*NUM_SENSOR_IN_SURFACE + ch_in_id)*2;
+
+	high_data = eepromReadByte(eeprom_index);
+	low_data = eepromReadByte(eeprom_index+1);
+	return ((high_data<<8)|low_data);
+}
+
+//DR! it's yours!!//
+void calibrationFindOffset(uint8_t id)
+{
+	uint32_t eeprom_index;
+	uint16_t offset_angle;
+
+	//In the surface part, there are #NUM_SENSOR_IN_SURFACE sensors
+	for(uint8_t ch_in_id =0; ch_in_id<NUM_SENSOR_IN_SURFACE; ch_in_id++)
+	{
+		//find offset_angle which has highest value in range of 0~1800 angle(/0.1 degree)
+		//input : angle = 0~1800 calibrationLuxRead(ch_in_id, angle);
+		//output :   offset_angle
+		//offset_anlge = findingMax()
+
+
+		//store in eeprom (ex, 0xABCD -> AB(low addr) CD(high addr))
+		eeprom_index = (id*NUM_SENSOR_IN_SURFACE + ch_in_id)*2;
+		eepromWriteByte(eeprom_index, (offset_angle>>8 | 0));
+		eepromWriteByte(eeprom_index+1, (offset_angle | 0));
+	}
+}
+
 
 void calibrationInit()
 {
@@ -167,9 +207,16 @@ bool calibrationMain(uint8_t id)
 
 					curr_angle += step;
 
-
 					if(curr_angle != calibrationParseCommand(command_packet)) return 0;
-					if(curr_angle > final_angle) return 0;
+					if(curr_angle > final_angle)
+					{
+						cmdifPrintf("\n curr angle : %d ", curr_angle);
+						cmdifPrintf("FINAL, now calibration end");
+						calibrationFindOffset(id);
+						///
+						return 1;
+					}
+
 					cmdifPrintf("\n curr angle : %d ", curr_angle);
 
 					calibrationLuxStore(id, curr_angle, iter_rx_cnt);
@@ -178,7 +225,7 @@ bool calibrationMain(uint8_t id)
 					ack_packet[2] = (curr_angle | 0);
 					ret = uartWrite(CALI_SERIAL, (uint8_t *)ack_packet, 4);
 					memset(command_packet, 0, sizeof(command_packet));
-					memset(ack_packet,		 0, sizeof(ack_packet));
+					memset(ack_packet, 0, sizeof(ack_packet));
 
 				}
 			}

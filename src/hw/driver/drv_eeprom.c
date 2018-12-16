@@ -121,24 +121,35 @@ bool drvEepromInit()
 
 
 
-uint8_t drvEepromReadByte(uint32_t addr)
+uint8_t drvEepromReadByte(uint32_t index)
 {
-  uint16_t read_value;
+  uint8_t data;
+  uint32_t addr;
 
+  if( IsInit == false )
+  {
+    return 0;
+  }
 
-  if( IsInit == false ) return 0;
+  addr = EEPROM_START_ADDRESS + index;
 
-  EE_ReadVariable((uint16_t)addr,  &read_value);
+  if((addr < EEPROM_START_ADDRESS) || (addr > PAGE0_END_ADDRESS))
+  {
+    return 0;
+  }
 
-  return (uint8_t)read_value;
+  data = *(volatile uint8_t*)(addr);
+
+  return data;
 }
-
 
 bool drvEepromWriteByte(uint32_t index, uint8_t data_in)
 {
+  uint32_t addr;
   if( IsInit == false ) return false;
 
-  if (EE_WriteVariable(index, (uint16_t)data_in) == EE_OK)
+  addr = EEPROM_START_ADDRESS + index;
+  if (EE_WriteVariable(addr, (uint16_t)data_in) == EE_OK)
   {
     return true;
   }

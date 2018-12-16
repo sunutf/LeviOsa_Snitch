@@ -167,7 +167,7 @@ void leviosa_boardCalcSource(void)
 float* leviosa_boardGetLuxBuf(uint8_t output)
 {
 	if(0 == output)		return source_lux;
-	else 						  return nature_lux;
+	else 			    return nature_lux;
 }
 
 void leviosa_boardConvDistance(void)
@@ -309,8 +309,17 @@ void leviosa_boardCaliTest(uint8_t id)
 		}
 
 	}
-
 }
+
+void leviosa_boardCaliRead(uint8_t id)
+{
+	for(uint8_t ch_in_id =0; ch_in_id<NUM_SENSOR_IN_SURFACE; ch_in_id++)
+	{
+		cmdifPrintf("read cali offset [ id : %d]\n", id);
+		cmdifPrintf("%d : %d\n", ch_in_id, calibrationReadEEPROM(id, ch_in_id));
+	}
+}
+
 
 
 #ifdef _USE_HW_CMDIF_LEVIOSA
@@ -339,10 +348,13 @@ int leviosaCmdif(int argc, char **argv)
   {
   	leviosa_boardLuxTest(3);
   }
-  else if(argc == 3 && strcmp("cali", argv[1]) == 0)
+  else if(argc == 4 && strcmp("cali", argv[1]) == 0)
   {
-  	uint8_t id = (uint8_t) strtoul((const char * ) argv[2], (char **)NULL, (int) 0);
-  	leviosa_boardCaliTest(id);
+	uint8_t id = (uint8_t) strtoul((const char * ) argv[3], (char **)NULL, (int) 0);
+
+	if(strcmp("test", argv[2]) == 0) 		leviosa_boardCaliTest(id);
+	else if(strcmp("read", argv[2]) == 0) 	leviosa_boardCaliRead(id);
+
   }
   else
   {

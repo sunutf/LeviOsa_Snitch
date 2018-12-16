@@ -33,6 +33,9 @@
 #define NUM_MUX        6
 #define NUM_SENSOR   (NUM_MUX*MAX_CH_PER_MUX)
 
+#define CALI_SERIAL 2
+#define NUM_SENSOR_IN_SURFACE 3
+
 #define ALL_CH   8
 
 
